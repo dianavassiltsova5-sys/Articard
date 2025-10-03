@@ -1,51 +1,144 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import axios from 'axios';
+import Dashboard from './components/Dashboard';
+import ShiftForm from './components/ShiftForm';
+import ShiftDetail from './components/ShiftDetail';
+import MonthlyReport from './components/MonthlyReport';
+import { Toaster } from './components/ui/sonner';
+import './App.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-const Home = () => {
-  const helloWorldApi = async () => {
+// Create axios instance with default config
+const apiClient = axios.create({
+  baseURL: API,
+  timeout: 10000,
+});
+
+function App() {
+  const [shifts, setShifts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchShifts = async () => {
     try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
+      setLoading(true);
+      const response = await apiClient.get('/shifts');
+      setShifts(response.data);
+    } catch (error) {
+      console.error('Error fetching shifts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createShift = async (shiftData) => {
+    try {
+      const response = await apiClient.post('/shifts', shiftData);
+      await fetchShifts(); // Refresh shifts
+      return response.data;
+    } catch (error) {
+      console.error('Error creating shift:', error);
+      throw error;
+    }
+  };
+
+  const updateShift = async (shiftId, updateData) => {
+    try {
+      const response = await apiClient.put(`/shifts/${shiftId}`, updateData);
+      await fetchShifts(); // Refresh shifts
+      return response.data;
+    } catch (error) {
+      console.error('Error updating shift:', error);
+      throw error;
+    }
+  };
+
+  const addIncident = async (shiftId, incidentData) => {
+    try {
+      await apiClient.post(`/shifts/${shiftId}/incidents`, {
+        shift_id: shiftId,
+        incident_data: incidentData
+      });
+      await fetchShifts(); // Refresh shifts
+    } catch (error) {
+      console.error('Error adding incident:', error);
+      throw error;
+    }
+  };
+
+  const removeIncident = async (shiftId, incidentIndex) => {
+    try {
+      await apiClient.delete(`/shifts/${shiftId}/incidents/${incidentIndex}`);
+      await fetchShifts(); // Refresh shifts
+    } catch (error) {
+      console.error('Error removing incident:', error);
+      throw error;
     }
   };
 
   useEffect(() => {
-    helloWorldApi();
+    fetchShifts();
   }, []);
 
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
-
-function App() {
-  return (
-    <div className="App">
+    <div className="App min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
+        <div className="container mx-auto px-4 py-6">
+          <header className="mb-8">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold text-slate-800 mb-2">
+                Articard Turvafirma
+              </h1>
+              <p className="text-slate-600 text-lg">
+                Töövahetus ja intsidentide haldussüsteem
+              </p>
+            </div>
+          </header>
+
+          <Routes>
+            <Route 
+              path="/" 
+              element={
+                <Dashboard 
+                  shifts={shifts}
+                  loading={loading}
+                  onCreateShift={createShift}
+                />
+              } 
+            />
+            <Route 
+              path="/shift/new" 
+              element={
+                <ShiftForm 
+                  onSubmit={createShift}
+                  onCancel={() => window.history.back()}
+                />
+              } 
+            />
+            <Route 
+              path="/shift/:id" 
+              element={
+                <ShiftDetail 
+                  shifts={shifts}
+                  onUpdateShift={updateShift}
+                  onAddIncident={addIncident}
+                  onRemoveIncident={removeIncident}
+                />
+              } 
+            />
+            <Route 
+              path="/monthly-report/:year/:month" 
+              element={
+                <MonthlyReport 
+                  shifts={shifts}
+                />
+              } 
+            />
+          </Routes>
+        </div>
+        <Toaster position="top-right" />
       </BrowserRouter>
     </div>
   );
