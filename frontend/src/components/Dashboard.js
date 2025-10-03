@@ -194,6 +194,7 @@ const Dashboard = ({ shifts, loading, onCreateShift }) => {
                 mode="single"
                 selected={selectedDate}
                 onSelect={handleDateSelect}
+                month={selectedMonth}
                 onMonthChange={setSelectedMonth}
                 locale={et}
                 className="rounded-md border"
