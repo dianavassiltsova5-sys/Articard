@@ -363,12 +363,31 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardContent>
       </Card>
 
+      {/* Print Header */}
+      <div className="print-only print-header">
+        <div className="flex items-center gap-3">
+          <img 
+            src="https://customer-assets.emergentagent.com/job_security-timetrack/artifacts/37b9rrnc_Articard.png" 
+            alt="Articard Logo" 
+            className="print-logo"
+          />
+          <div>
+            <h1 className="print-title">ARTICARD TURVAFIRMA</h1>
+            <p className="print-subtitle">Professionaalne turvateenus</p>
+          </div>
+        </div>
+        <div className="text-right text-xs">
+          <p>Kuu aruanne - {monthName}</p>
+          <p>{format(new Date(), 'dd.MM.yyyy HH:mm', { locale: et })}</p>
+        </div>
+      </div>
+
       {/* Print Footer */}
-      <div className="print-only mt-8 pt-4 border-t border-slate-200">
-        <div className="text-center text-sm text-slate-600">
-          <p>Articard Turvafirma | Kuu aruanne {monthName}</p>
-          <p>Genereeritud: {format(new Date(), 'dd. MMMM yyyy HH:mm', { locale: et })}</p>
-          <p>Kogu tunnid: {stats.totalHours.toFixed(1)} | Vahetused: {stats.totalShifts} | Intsidendid: {stats.totalIncidents}</p>
+      <div className="print-only mt-4 pt-2 border-t border-slate-200">
+        <div className="text-center text-xs text-slate-600 space-y-1">
+          <p>Articard Turvafirma | Litsents nr. TJT000000 | Tel: +372 000 0000 | info@articard.ee</p>
+          <p>Kokkuvõte: {stats.totalHours.toFixed(1)}h | {stats.totalShifts} vahetust | {stats.totalIncidents} intsidenti</p>
+          <p>Konfidentsiaalne dokument - ainult ametlikuks kasutamiseks</p>
         </div>
       </div>
     </div>
