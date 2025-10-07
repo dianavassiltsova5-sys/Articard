@@ -492,11 +492,30 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
         </CardContent>
       </Card>
 
+      {/* Print Header */}
+      <div className="print-only print-header">
+        <div className="flex items-center gap-3">
+          <img 
+            src="https://customer-assets.emergentagent.com/job_security-timetrack/artifacts/37b9rrnc_Articard.png" 
+            alt="Articard Logo" 
+            className="print-logo"
+          />
+          <div>
+            <h1 className="print-title">ARTICARD TURVAFIRMA</h1>
+            <p className="print-subtitle">Professionaalne turvateenus</p>
+          </div>
+        </div>
+        <div className="text-right text-xs">
+          <p>Töövahetus aruanne</p>
+          <p>{format(new Date(), 'dd.MM.yyyy HH:mm', { locale: et })}</p>
+        </div>
+      </div>
+
       {/* Print Footer */}
-      <div className="print-only mt-8 pt-4 border-t border-slate-200">
-        <div className="text-center text-sm text-slate-600">
-          <p>Articard Turvafirma | Töövahetus aruanne</p>
-          <p>Genereeritud: {format(new Date(), 'dd. MMMM yyyy HH:mm', { locale: et })}</p>
+      <div className="print-only mt-4 pt-2 border-t border-slate-200">
+        <div className="text-center text-xs text-slate-600">
+          <p>Articard Turvafirma | Litsents nr. TJT000000 | Tel: +372 000 0000 | info@articard.ee</p>
+          <p>Konfidentsiaalne dokument - ainult ametlikuks kasutamiseks</p>
         </div>
       </div>
     </div>
