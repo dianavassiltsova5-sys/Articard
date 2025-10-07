@@ -97,13 +97,27 @@ function App() {
       <BrowserRouter>
         <div className="container mx-auto px-4 py-6">
           <header className="mb-8">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-slate-800 mb-2">
-                Articard Turvafirma
-              </h1>
-              <p className="text-slate-600 text-lg">
-                Töövahetus ja intsidentide haldussüsteem
-              </p>
+            <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white rounded-lg shadow-lg p-8">
+              <div className="flex items-center justify-center gap-6">
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_security-timetrack/artifacts/37b9rrnc_Articard.png" 
+                  alt="Articard Logo" 
+                  className="h-16 w-16 object-contain"
+                />
+                <div className="text-center">
+                  <h1 className="text-4xl font-bold mb-2">
+                    ARTICARD TURVAFIRMA
+                  </h1>
+                  <p className="text-blue-100 text-lg font-medium">
+                    Professionaalne turvateenus • Töövahetus ja intsidentide haldussüsteem
+                  </p>
+                  <div className="flex justify-center gap-4 mt-3 text-sm text-blue-200">
+                    <span>• 24/7 Valve</span>
+                    <span>• Sertifitseeritud personal</span>
+                    <span>• Digitaalne aruandlus</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </header>
 
