@@ -225,7 +225,8 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                   Ennetatud kahju: {stats.preventedTheftAmount.toFixed(0)}€
                 </div>
               </div>
-          </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
