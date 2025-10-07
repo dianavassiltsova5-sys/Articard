@@ -350,29 +350,29 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                     }
                     
                     return (
-                      <tr key={shift.id} className={index % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
-                        <td className="border border-slate-300 p-2 text-xs">
+                      <tr key={shift.id} className={`hover:bg-blue-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+                        <td className="border-r border-gray-200 p-3 text-sm font-medium">
                           {format(parseISO(shift.date), 'dd.MM.yyyy')}
                         </td>
-                        <td className="border border-slate-300 p-2 text-xs">
+                        <td className="border-r border-gray-200 p-3 text-sm">
                           {shift.start_time}
                         </td>
-                        <td className="border border-slate-300 p-2 text-xs">
+                        <td className="border-r border-gray-200 p-3 text-sm">
                           {shift.end_time}
                         </td>
-                        <td className="border border-slate-300 p-2 text-xs font-medium">
-                          {hoursWorked.toFixed(1)}
+                        <td className="border-r border-gray-200 p-3 text-sm font-bold text-blue-700">
+                          {hoursWorked.toFixed(1)}h
                         </td>
-                        <td className="border border-slate-300 p-2 text-xs">
+                        <td className="border-r border-gray-200 p-3 text-sm font-medium text-slate-700">
                           {shift.guard_name}
                         </td>
-                        <td className="border border-slate-300 p-2 text-xs">
-                          <span className="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs">
+                        <td className="border-r border-gray-200 p-3 text-sm">
+                          <span className="inline-block px-3 py-1 bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-800 rounded-full text-xs font-medium border border-yellow-300">
                             {shift.object_name}
                           </span>
                         </td>
-                        <td className="border border-slate-300 p-2 text-sm leading-relaxed align-top">
-                          <div className="whitespace-pre-line" style={{ lineHeight: '1.5' }}>
+                        <td className="p-3 text-sm leading-relaxed align-top">
+                          <div className="whitespace-pre-line" style={{ lineHeight: '1.6' }}>
                             {remarksContent}
                           </div>
                         </td>
