@@ -63,7 +63,12 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         shift.incidents.forEach(incident => {
           if (incident.type === 'theft') {
             stats.theftIncidents += 1;
-            stats.totalTheftAmount += parseFloat(incident.amount) || 0;
+            if (incident.theft_prevented) {
+              stats.preventedTheftAmount += parseFloat(incident.amount) || 0;
+              stats.preventedThefts += 1;
+            } else {
+              stats.totalTheftAmount += parseFloat(incident.amount) || 0;
+            }
           }
         });
       }
@@ -75,6 +80,8 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
       totalIncidents: 0,
       theftIncidents: 0,
       totalTheftAmount: 0,
+      preventedTheftAmount: 0,
+      preventedThefts: 0,
       guards: [],
       objects: []
     });
