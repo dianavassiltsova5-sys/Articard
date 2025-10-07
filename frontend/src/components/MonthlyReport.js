@@ -319,10 +319,26 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                             </div>
                             
                             {incident.type === 'theft' && (
-                              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs text-slate-600">
+                              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs text-slate-600 mb-2">
                                 <div><strong>Sugu:</strong> {formatGender(incident.gender)}</div>
                                 <div><strong>Erivahendid:</strong> {incident.special_tools_used ? 'Jah' : 'Ei'}</div>
                                 <div><strong>Tulemus:</strong> {formatOutcome(incident.outcome)}</div>
+                              </div>
+                            )}
+
+                            {/* Additional services for all incident types */}
+                            {(incident.g4s_patrol_called || incident.ambulance_called) && (
+                              <div className="flex flex-wrap gap-1 mt-2">
+                                {incident.g4s_patrol_called && (
+                                  <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700">
+                                    G4S patrull
+                                  </Badge>
+                                )}
+                                {incident.ambulance_called && (
+                                  <Badge variant="outline" className="text-xs bg-red-50 text-red-700">
+                                    Kiirabi
+                                  </Badge>
+                                )}
                               </div>
                             )}
                           </div>
