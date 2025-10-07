@@ -290,6 +290,12 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                           mainLine += `Kell ${format(parseISO(incident.timestamp), 'HH:mm')} - `;
                         }
                         mainLine += `${formatIncidentType(incident.type)}`;
+                        
+                        // Add prevented theft indicator
+                        if (incident.type === 'theft' && incident.theft_prevented) {
+                          mainLine += ` (ENNETATUD)`;
+                        }
+                        
                         lines.push(mainLine);
                         
                         // Description on separate line
@@ -299,9 +305,15 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                         if (incident.type === 'theft') {
                           const details = [];
                           details.push(`Isik: ${formatGender(incident.gender)}`);
-                          details.push(`Summa: ${incident.amount}€`);
+                          if (incident.theft_prevented) {
+                            details.push(`Ennetatud summa: ${incident.amount}€`);
+                          } else {
+                            details.push(`Summa: ${incident.amount}€`);
+                          }
                           details.push(`Erivahendid: ${incident.special_tools_used ? 'Jah' : 'Ei'}`);
-                          details.push(`Tulemus: ${formatOutcome(incident.outcome)}`);
+                          if (!incident.theft_prevented) {
+                            details.push(`Tulemus: ${formatOutcome(incident.outcome)}`);
+                          }
                           lines.push(`   ${details.join(', ')}`);
                         }
                         
