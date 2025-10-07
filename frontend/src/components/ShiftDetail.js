@@ -472,7 +472,7 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                         <span className="font-medium">Summa:</span> {incident.amount}€
                       </div>
                       <div>
-                        <span className="font-medium">Eriterendid:</span> {incident.special_tools_used ? 'Jah' : 'Ei'}
+                        <span className="font-medium">Erivahendid:</span> {incident.special_tools_used ? 'Jah' : 'Ei'}
                       </div>
                       <div>
                         <span className="font-medium">Tulemus:</span> {formatOutcome(incident.outcome)}
