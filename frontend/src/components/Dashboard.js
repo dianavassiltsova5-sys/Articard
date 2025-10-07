@@ -121,17 +121,20 @@ const Dashboard = ({ shifts, loading, onCreateShift, onDeleteShift }) => {
     <div className="space-y-6">
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <Card className="card-hover">
+        <Card className="card-hover bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg flex items-center gap-2">
-              <Clock className="h-5 w-5 text-blue-600" />
-              Tunnid kuus
+              <div className="p-2 bg-blue-600 rounded-lg">
+                <Clock className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-slate-700">Tunnid kuus</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-blue-600">
               {monthlyStats.totalHours.toFixed(1)}
             </div>
+            <p className="text-sm text-slate-600">tundi kokku</p>
           </CardContent>
         </Card>
 
