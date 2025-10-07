@@ -76,6 +76,16 @@ const Dashboard = ({ shifts, loading, onCreateShift, onDeleteShift }) => {
     navigate(`/monthly-report/${year}/${month}`);
   };
 
+  const handleDeleteShift = async (shiftId, shiftName) => {
+    try {
+      await onDeleteShift(shiftId);
+      // Show success message via toast
+    } catch (error) {
+      console.error('Error deleting shift:', error);
+      // Show error message via toast
+    }
+  };
+
   // Custom day content for calendar
   const dayContent = (date) => {
     const dateKey = format(date, 'yyyy-MM-dd');
