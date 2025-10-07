@@ -135,6 +135,7 @@ function App() {
                   onUpdateShift={updateShift}
                   onAddIncident={addIncident}
                   onRemoveIncident={removeIncident}
+                  onDeleteShift={deleteShift}
                 />
               } 
             />
