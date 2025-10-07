@@ -93,7 +93,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="App min-h-screen bg-gradient-to-br from-gray-50 to-slate-100">
       <BrowserRouter>
         <div className="container mx-auto px-4 py-6">
           <header className="mb-8">
