@@ -145,6 +145,7 @@ function App() {
               element={
                 <MonthlyReport 
                   shifts={shifts}
+                  onDeleteShift={deleteShift}
                 />
               } 
             />
