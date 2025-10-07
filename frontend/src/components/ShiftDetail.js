@@ -50,7 +50,8 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
       special_tools_used: false,
       outcome: 'vabastatud',
       g4s_patrol_called: false,
-      ambulance_called: false
+      ambulance_called: false,
+      theft_prevented: false
     });
     setIncidentType('general');
   };
