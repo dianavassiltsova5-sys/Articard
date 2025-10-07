@@ -26,9 +26,6 @@ const Dashboard = ({ shifts, loading, onCreateShift, onDeleteShift }) => {
     return acc;
   }, {});
 
-  console.log('Shifts by date:', shiftsByDate);
-  console.log('Selected date:', selectedDate ? format(selectedDate, 'yyyy-MM-dd') : 'None');
-
   // Get shifts for selected date
   const selectedDateShifts = selectedDate 
     ? shiftsByDate[format(selectedDate, 'yyyy-MM-dd')] || []
