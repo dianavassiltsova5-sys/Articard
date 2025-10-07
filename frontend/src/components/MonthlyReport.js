@@ -103,11 +103,15 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
     return type === 'theft' ? 'Vargus' : 'Üldine';
   };
 
+  const formatGender = (gender) => {
+    return gender === 'mees' ? 'Mees' : 'Naine';
+  };
+
   const formatOutcome = (outcome) => {
     switch (outcome) {
       case 'vabastatud': return 'Vabastatud';
-      case 'maksis_vabastatud': return 'Maksis';
-      case 'politsei': return 'Politsei';
+      case 'maksis_vabastatud': return 'Maksis ja vabastatud';
+      case 'politsei': return 'Antud politseisse';
       default: return outcome;
     }
   };
