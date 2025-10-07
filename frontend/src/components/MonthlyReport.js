@@ -277,16 +277,16 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         <CardContent>
           {monthlyShifts.length > 0 ? (
             <div className="overflow-x-auto" data-testid="monthly-shifts-table">
-              <table className="w-full text-xs border-collapse" style={{ minWidth: '800px' }}>
+              <table className="w-full text-sm border-collapse shadow-sm rounded-lg overflow-hidden" style={{ minWidth: '800px' }}>
                 <thead>
-                  <tr className="bg-blue-100 border-b-2 border-blue-200">
-                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '10%' }}>Kuupäev</th>
-                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '8%' }}>Aeg sisse</th>
-                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '8%' }}>Aeg välja</th>
-                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '6%' }}>Tunnid</th>
-                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '15%' }}>Turvamees</th>
-                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '15%' }}>Objekt</th>
-                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '38%' }}>Märge</th>
+                  <tr className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+                    <th className="border-r border-blue-500 p-3 text-left font-semibold" style={{ width: '10%' }}>Kuupäev</th>
+                    <th className="border-r border-blue-500 p-3 text-left font-semibold" style={{ width: '8%' }}>Aeg sisse</th>
+                    <th className="border-r border-blue-500 p-3 text-left font-semibold" style={{ width: '8%' }}>Aeg välja</th>
+                    <th className="border-r border-blue-500 p-3 text-left font-semibold" style={{ width: '6%' }}>Tunnid</th>
+                    <th className="border-r border-blue-500 p-3 text-left font-semibold" style={{ width: '15%' }}>Turvamees</th>
+                    <th className="border-r border-blue-500 p-3 text-left font-semibold" style={{ width: '15%' }}>Objekt</th>
+                    <th className="p-3 text-left font-semibold" style={{ width: '38%' }}>Märge</th>
                   </tr>
                 </thead>
                 <tbody>
