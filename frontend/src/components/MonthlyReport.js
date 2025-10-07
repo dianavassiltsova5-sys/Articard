@@ -248,112 +248,106 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardContent>
       </Card>
 
-      {/* Detailed Daily Report */}
+      {/* Compact Table Report - Similar to Reference Screenshot */}
       <Card className="card-hover">
         <CardHeader>
-          <CardTitle>Detailne päevaaruanne</CardTitle>
+          <CardTitle>Tööaeg ja info sündmuste kohta</CardTitle>
           <CardDescription>
-            {monthName} - kõik vahetused ja intsidendid päevade lõikes
+            Periood: {format(startOfMonth(new Date(parseInt(year), parseInt(month) - 1)), 'dd.MM.yyyy')} - {format(endOfMonth(new Date(parseInt(year), parseInt(month) - 1)), 'dd.MM.yyyy')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {monthlyShifts.length > 0 ? (
-            <div className="space-y-4" data-testid="monthly-shifts-detailed">
-              {monthlyShifts.map((shift, index) => {
-                const startTime = new Date(`2000-01-01T${shift.start_time}`);
-                const endTime = new Date(`2000-01-01T${shift.end_time}`);
-                let hoursWorked = (endTime - startTime) / (1000 * 60 * 60);
-                if (hoursWorked < 0) hoursWorked += 24;
-                
-                return (
-                  <div key={shift.id} className="border border-slate-200 rounded-lg p-4 hover:bg-slate-50 transition-colors">
-                    {/* Shift Header */}
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-3">
-                        <Badge variant="outline" className="font-medium">
-                          {format(parseISO(shift.date), 'dd.MM.yyyy EEEE', { locale: et })}
-                        </Badge>
-                        <span className="font-semibold text-slate-800">{shift.guard_name}</span>
-                        <span className="text-slate-600">{shift.object_name}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Badge variant="secondary">
-                          {shift.start_time} - {shift.end_time} ({hoursWorked.toFixed(1)}h)
-                        </Badge>
-                        {shift.incidents && shift.incidents.length > 0 && (
-                          <Badge variant="destructive" className="text-xs">
-                            {shift.incidents.length} intsident{shift.incidents.length !== 1 ? 'i' : ''}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Incidents Details */}
-                    {shift.incidents && shift.incidents.length > 0 ? (
-                      <div className="space-y-3 ml-4 pl-4 border-l-2 border-amber-200">
-                        {shift.incidents.map((incident, idx) => (
-                          <div key={idx} className="bg-slate-50 rounded p-3 text-sm">
-                            <div className="flex items-start justify-between mb-2">
-                              <div className="flex items-center gap-2">
-                                <Badge 
-                                  variant={incident.type === 'theft' ? 'destructive' : 'secondary'}
-                                  className="text-xs"
-                                >
-                                  {formatIncidentType(incident.type)}
-                                </Badge>
-                                {incident.timestamp && (
-                                  <span className="text-xs text-slate-500">
-                                    {format(parseISO(incident.timestamp), 'HH:mm')}
-                                  </span>
-                                )}
-                              </div>
-                              {incident.type === 'theft' && incident.amount > 0 && (
-                                <Badge variant="outline" className="text-xs bg-red-50 text-red-700">
-                                  {incident.amount}€
-                                </Badge>
-                              )}
-                            </div>
-                            
-                            <div className="text-slate-700 mb-2">
-                              <strong>Kirjeldus:</strong> {incident.description}
-                            </div>
-                            
-                            {incident.type === 'theft' && (
-                              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs text-slate-600 mb-2">
-                                <div><strong>Sugu:</strong> {formatGender(incident.gender)}</div>
-                                <div><strong>Erivahendid:</strong> {incident.special_tools_used ? 'Jah' : 'Ei'}</div>
-                                <div><strong>Tulemus:</strong> {formatOutcome(incident.outcome)}</div>
-                              </div>
-                            )}
-
-                            {/* Additional services for all incident types */}
-                            {(incident.g4s_patrol_called || incident.ambulance_called) && (
-                              <div className="flex flex-wrap gap-1 mt-2">
-                                {incident.g4s_patrol_called && (
-                                  <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700">
-                                    G4S patrull
-                                  </Badge>
-                                )}
-                                {incident.ambulance_called && (
-                                  <Badge variant="outline" className="text-xs bg-red-50 text-red-700">
-                                    Kiirabi
-                                  </Badge>
-                                )}
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="ml-4 pl-4 border-l-2 border-green-200">
-                        <div className="text-sm text-green-700 bg-green-50 rounded p-2">
-                          ✅ Intsident-vaba vahetus
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+            <div className="overflow-x-auto" data-testid="monthly-shifts-table">
+              <table className="w-full text-xs border-collapse" style={{ minWidth: '800px' }}>
+                <thead>
+                  <tr className="bg-blue-100 border-b-2 border-blue-200">
+                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '10%' }}>Kuupäev</th>
+                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '8%' }}>Aeg sisse</th>
+                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '8%' }}>Aeg välja</th>
+                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '6%' }}>Tunnid</th>
+                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '15%' }}>Turvamees</th>
+                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '15%' }}>Objekt</th>
+                    <th className="border border-slate-300 p-2 text-left font-medium" style={{ width: '38%' }}>Märge</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {monthlyShifts.map((shift, index) => {
+                    const startTime = new Date(`2000-01-01T${shift.start_time}`);
+                    const endTime = new Date(`2000-01-01T${shift.end_time}`);
+                    let hoursWorked = (endTime - startTime) / (1000 * 60 * 60);
+                    if (hoursWorked < 0) hoursWorked += 24;
+                    
+                    // Format incidents for Märge column
+                    let remarksContent = '';
+                    if (shift.incidents && shift.incidents.length > 0) {
+                      remarksContent = shift.incidents.map((incident, idx) => {
+                        let incidentText = `${idx + 1}. `;
+                        if (incident.timestamp) {
+                          incidentText += `Kell ${format(parseISO(incident.timestamp), 'HH:mm')} - `;
+                        }
+                        incidentText += `${formatIncidentType(incident.type)}: ${incident.description}`;
+                        
+                        if (incident.type === 'theft') {
+                          incidentText += ` (${formatGender(incident.gender)}, ${incident.amount}€, ${incident.special_tools_used ? 'erivahendid' : 'ilma erivahenditeta'}, ${formatOutcome(incident.outcome)})`;
+                        }
+                        
+                        if (incident.g4s_patrol_called || incident.ambulance_called) {
+                          const services = [];
+                          if (incident.g4s_patrol_called) services.push('G4S patrull');
+                          if (incident.ambulance_called) services.push('kiirabi');
+                          incidentText += ` [Kutsutud: ${services.join(', ')}]`;
+                        }
+                        
+                        return incidentText;
+                      }).join('\n');
+                    } else {
+                      remarksContent = 'Intsidendid puuduvad';
+                    }
+                    
+                    return (
+                      <tr key={shift.id} className={index % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
+                        <td className="border border-slate-300 p-2 text-xs">
+                          {format(parseISO(shift.date), 'dd.MM.yyyy')}
+                        </td>
+                        <td className="border border-slate-300 p-2 text-xs">
+                          {shift.start_time}
+                        </td>
+                        <td className="border border-slate-300 p-2 text-xs">
+                          {shift.end_time}
+                        </td>
+                        <td className="border border-slate-300 p-2 text-xs font-medium">
+                          {hoursWorked.toFixed(1)}
+                        </td>
+                        <td className="border border-slate-300 p-2 text-xs">
+                          {shift.guard_name}
+                        </td>
+                        <td className="border border-slate-300 p-2 text-xs">
+                          <span className="inline-block px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs">
+                            {shift.object_name}
+                          </span>
+                        </td>
+                        <td className="border border-slate-300 p-2 text-xs leading-relaxed">
+                          <div className="whitespace-pre-line">{remarksContent}</div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  {/* Summary Row */}
+                  <tr className="bg-blue-100 border-t-2 border-blue-200">
+                    <td className="border border-slate-300 p-2 text-xs font-bold" colSpan="3">KOKKU</td>
+                    <td className="border border-slate-300 p-2 text-xs font-bold">
+                      {stats.totalHours.toFixed(1)}
+                    </td>
+                    <td className="border border-slate-300 p-2 text-xs" colSpan="2">
+                      {stats.totalShifts} vahetust, {stats.totalIncidents} intsidenti
+                    </td>
+                    <td className="border border-slate-300 p-2 text-xs">
+                      Varguste kahju kokku: {stats.totalTheftAmount.toFixed(0)}€
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           ) : (
             <div className="text-center py-12 text-slate-500">
