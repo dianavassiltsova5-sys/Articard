@@ -5,8 +5,10 @@ import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { 
   ArrowLeft, Printer, Calendar, Clock, AlertTriangle, 
-  FileText, TrendingUp, User, Building 
+  FileText, TrendingUp, User, Building, Trash2 
 } from 'lucide-react';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from './ui/alert-dialog';
+import { toast } from 'sonner';
 import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
 import { et } from 'date-fns/locale';
 
