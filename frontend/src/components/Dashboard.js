@@ -172,18 +172,19 @@ const Dashboard = ({ shifts, loading, onCreateShift, onDeleteShift }) => {
           </CardContent>
         </Card>
 
-        <Card className="card-hover">
+        <Card className="card-hover bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg flex items-center gap-2">
-              <FileText className="h-5 w-5 text-purple-600" />
-              Aruanded
+              <div className="p-2 bg-purple-600 rounded-lg">
+                <FileText className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-slate-700">Aruanded</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <Button 
               onClick={handleViewMonthlyReport}
-              className="w-full btn-secondary"
-              variant="outline"
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white"
               data-testid="monthly-report-btn"
             >
               Kuu aruanne
