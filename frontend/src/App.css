@@ -319,16 +319,74 @@ body {
 /* Responsive design */
 @media (max-width: 768px) {
   .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
   
   .text-4xl {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   
   .text-lg {
-    font-size: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Mobile-optimized monthly report */
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .space-y-6 > * + * {
+    margin-top: 1rem;
+  }
+  
+  .space-y-4 > * + * {
+    margin-top: 0.75rem;
+  }
+  
+  /* Compact header on mobile */
+  .bg-gradient-to-r {
+    padding: 1rem !important;
+  }
+  
+  .bg-gradient-to-r h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  .bg-gradient-to-r p {
+    font-size: 0.875rem !important;
+  }
+  
+  /* Table adjustments for mobile */
+  table {
+    font-size: 10px;
+  }
+  
+  table th,
+  table td {
+    padding: 4px 2px;
+  }
+  
+  /* Stack statistics on mobile */
+  .grid-cols-2.md\\:grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .grid-cols-1.md\\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tablet responsive design */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  table {
+    font-size: 11px;
   }
 }
 
