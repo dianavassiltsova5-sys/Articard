@@ -212,16 +212,20 @@ const Dashboard = ({ shifts, loading, onCreateShift, onDeleteShift }) => {
                 onMonthChange={setSelectedMonth}
                 locale={et}
                 className="rounded-md border"
-                components={{
-                  Day: ({ date, ...props }) => (
-                    <button 
-                      {...props}
-                      className="calendar-day p-3 text-sm hover:bg-slate-100 rounded-md transition-colors"
-                      data-testid={`calendar-day-${format(date, 'yyyy-MM-dd')}`}
-                    >
-                      {dayContent(date)}
-                    </button>
-                  )
+                modifiers={{
+                  hasShifts: (date) => {
+                    const dateKey = format(date, 'yyyy-MM-dd');
+                    return (shiftsByDate[dateKey] || []).length > 0;
+                  },
+                  hasIncidents: (date) => {
+                    const dateKey = format(date, 'yyyy-MM-dd');
+                    const dayShifts = shiftsByDate[dateKey] || [];
+                    return dayShifts.some(shift => shift.incidents && shift.incidents.length > 0);
+                  }
+                }}
+                modifiersClassNames={{
+                  hasShifts: "bg-blue-100 border-blue-300",
+                  hasIncidents: "bg-amber-100 border-amber-300",
                 }}
               />
             </CardContent>
