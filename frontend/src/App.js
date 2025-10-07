@@ -78,6 +78,16 @@ function App() {
     }
   };
 
+  const deleteShift = async (shiftId) => {
+    try {
+      await apiClient.delete(`/shifts/${shiftId}`);
+      await fetchShifts(); // Refresh shifts
+    } catch (error) {
+      console.error('Error deleting shift:', error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
     fetchShifts();
   }, []);
