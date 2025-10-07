@@ -153,8 +153,16 @@ body {
   
   /* Compact whitespace in table cells */
   .whitespace-pre-line {
-    white-space: normal !important;
-    line-height: 1.1 !important;
+    white-space: pre-line !important;
+    line-height: 1.2 !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 8px !important;
+  }
+  
+  /* Ensure table cells expand vertically */
+  table td {
+    vertical-align: top !important;
+    word-wrap: break-word !important;
   }
   
   .text-4xl {
