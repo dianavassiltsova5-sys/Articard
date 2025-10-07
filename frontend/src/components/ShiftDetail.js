@@ -505,18 +505,29 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                   <p className="text-sm mb-3">{incident.description}</p>
                   
                   {incident.type === 'theft' && (
-                    <div className="grid grid-cols-2 gap-4 text-xs text-slate-600 mb-3">
-                      <div>
-                        <span className="font-medium">Sugu:</span> {formatGender(incident.gender)}
-                      </div>
-                      <div>
-                        <span className="font-medium">Summa:</span> {incident.amount}€
-                      </div>
-                      <div>
-                        <span className="font-medium">Erivahendid:</span> {incident.special_tools_used ? 'Jah' : 'Ei'}
-                      </div>
-                      <div>
-                        <span className="font-medium">Tulemus:</span> {formatOutcome(incident.outcome)}
+                    <div className="space-y-2 mb-3">
+                      {incident.theft_prevented && (
+                        <div className="bg-green-50 border border-green-200 rounded p-2">
+                          <div className="text-sm font-medium text-green-800">
+                            ✅ Vargus ennetatud summas {incident.amount}€
+                          </div>
+                        </div>
+                      )}
+                      <div className="grid grid-cols-2 gap-4 text-xs text-slate-600">
+                        <div>
+                          <span className="font-medium">Sugu:</span> {formatGender(incident.gender)}
+                        </div>
+                        <div>
+                          <span className="font-medium">{incident.theft_prevented ? 'Ennetatud summa' : 'Summa'}:</span> {incident.amount}€
+                        </div>
+                        <div>
+                          <span className="font-medium">Erivahendid:</span> {incident.special_tools_used ? 'Jah' : 'Ei'}
+                        </div>
+                        {!incident.theft_prevented && (
+                          <div>
+                            <span className="font-medium">Tulemus:</span> {formatOutcome(incident.outcome)}
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
