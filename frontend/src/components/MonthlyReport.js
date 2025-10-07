@@ -278,29 +278,43 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                     let hoursWorked = (endTime - startTime) / (1000 * 60 * 60);
                     if (hoursWorked < 0) hoursWorked += 24;
                     
-                    // Format incidents for Märge column
+                    // Format incidents for Märge column with better structure
                     let remarksContent = '';
                     if (shift.incidents && shift.incidents.length > 0) {
                       remarksContent = shift.incidents.map((incident, idx) => {
-                        let incidentText = `${idx + 1}. `;
+                        let lines = [];
+                        
+                        // Main incident line with time and type
+                        let mainLine = `${idx + 1}. `;
                         if (incident.timestamp) {
-                          incidentText += `Kell ${format(parseISO(incident.timestamp), 'HH:mm')} - `;
+                          mainLine += `Kell ${format(parseISO(incident.timestamp), 'HH:mm')} - `;
                         }
-                        incidentText += `${formatIncidentType(incident.type)}: ${incident.description}`;
+                        mainLine += `${formatIncidentType(incident.type)}`;
+                        lines.push(mainLine);
                         
+                        // Description on separate line
+                        lines.push(`   Kirjeldus: ${incident.description}`);
+                        
+                        // Details for theft incidents
                         if (incident.type === 'theft') {
-                          incidentText += ` (${formatGender(incident.gender)}, ${incident.amount}€, ${incident.special_tools_used ? 'erivahendid' : 'ilma erivahenditeta'}, ${formatOutcome(incident.outcome)})`;
+                          const details = [];
+                          details.push(`Isik: ${formatGender(incident.gender)}`);
+                          details.push(`Summa: ${incident.amount}€`);
+                          details.push(`Erivahendid: ${incident.special_tools_used ? 'Jah' : 'Ei'}`);
+                          details.push(`Tulemus: ${formatOutcome(incident.outcome)}`);
+                          lines.push(`   ${details.join(', ')}`);
                         }
                         
+                        // Additional services if called
                         if (incident.g4s_patrol_called || incident.ambulance_called) {
                           const services = [];
                           if (incident.g4s_patrol_called) services.push('G4S patrull');
-                          if (incident.ambulance_called) services.push('kiirabi');
-                          incidentText += ` [Kutsutud: ${services.join(', ')}]`;
+                          if (incident.ambulance_called) services.push('Kiirabi');
+                          lines.push(`   Kutsutud teenused: ${services.join(', ')}`);
                         }
                         
-                        return incidentText;
-                      }).join('\n');
+                        return lines.join('\n');
+                      }).join('\n\n');
                     } else {
                       remarksContent = 'Intsidendid puuduvad';
                     }
