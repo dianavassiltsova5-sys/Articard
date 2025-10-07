@@ -87,6 +87,18 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
     window.print();
   };
 
+  const handleDeleteAllShifts = async () => {
+    try {
+      const deletePromises = monthlyShifts.map(shift => onDeleteShift(shift.id));
+      await Promise.all(deletePromises);
+      toast.success(`${monthlyShifts.length} vahetust kustutatud!`);
+      navigate('/');
+    } catch (error) {
+      console.error('Error deleting shifts:', error);
+      toast.error('Viga vahetuste kustutamisel');
+    }
+  };
+
   const formatIncidentType = (type) => {
     return type === 'theft' ? 'Vargus' : 'Üldine';
   };
