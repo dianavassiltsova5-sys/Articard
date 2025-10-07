@@ -399,6 +399,31 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                     </>
                   )}
 
+                  {/* Additional incident fields */}
+                  <div className="space-y-3 border-t pt-4">
+                    <Label className="text-sm font-medium text-slate-700">Täiendavad teenused</Label>
+                    
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="g4s_patrol"
+                        checked={incidentData.g4s_patrol_called}
+                        onCheckedChange={(checked) => setIncidentData(prev => ({ ...prev, g4s_patrol_called: checked }))}
+                        data-testid="g4s-patrol-checkbox"
+                      />
+                      <Label htmlFor="g4s_patrol" className="text-sm">Kutsutud G4S patrull</Label>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="ambulance"
+                        checked={incidentData.ambulance_called}
+                        onCheckedChange={(checked) => setIncidentData(prev => ({ ...prev, ambulance_called: checked }))}
+                        data-testid="ambulance-checkbox"
+                      />
+                      <Label htmlFor="ambulance" className="text-sm">Kutsutud kiirabi</Label>
+                    </div>
+                  </div>
+
                   <div className="flex gap-2 pt-4">
                     <Button 
                       onClick={handleAddIncident} 
