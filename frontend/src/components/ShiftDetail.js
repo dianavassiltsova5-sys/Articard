@@ -11,8 +11,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Checkbox } from './ui/checkbox';
 import { 
   Calendar, Clock, User, Building, AlertTriangle, 
-  Plus, Trash2, Edit, FileText, ArrowLeft, Printer 
+  Plus, Trash2, Edit, FileText, ArrowLeft, Printer, MoreVertical 
 } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from './ui/alert-dialog';
 import { format, parseISO } from 'date-fns';
 import { et } from 'date-fns/locale';
 import { toast } from 'sonner';
