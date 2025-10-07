@@ -224,6 +224,28 @@ class ArticardAPITester:
             200
         )
 
+    def test_delete_shift(self):
+        """Test deleting a shift"""
+        if not self.created_shift_id:
+            self.log_test("Delete Shift", False, "No shift ID available from create test")
+            return False, {}
+        
+        return self.run_test(
+            "Delete Shift",
+            "DELETE",
+            f"shifts/{self.created_shift_id}",
+            200
+        )
+
+    def test_delete_nonexistent_shift(self):
+        """Test deleting a non-existent shift"""
+        return self.run_test(
+            "Delete Non-existent Shift",
+            "DELETE",
+            "shifts/nonexistent-id",
+            404
+        )
+
     def test_nonexistent_shift(self):
         """Test getting a non-existent shift"""
         return self.run_test(
