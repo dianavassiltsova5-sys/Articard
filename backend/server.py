@@ -169,6 +169,18 @@ async def update_shift(shift_id: str, shift_data: WorkShiftUpdate):
     parsed_shift = parse_from_mongo(updated_shift)
     return WorkShift(**parsed_shift)
 
+@api_router.delete("/shifts/{shift_id}")
+async def delete_shift(shift_id: str):
+    shift = await db.work_shifts.find_one({"id": shift_id})
+    if not shift:
+        raise HTTPException(status_code=404, detail="Shift not found")
+    
+    result = await db.work_shifts.delete_one({"id": shift_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Shift not found")
+    
+    return {"message": "Shift deleted successfully"}
+
 @api_router.post("/shifts/{shift_id}/incidents")
 async def add_incident(shift_id: str, incident: IncidentCreate):
     shift = await db.work_shifts.find_one({"id": shift_id})
