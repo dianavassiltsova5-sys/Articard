@@ -154,15 +154,28 @@ body {
   /* Compact whitespace in table cells */
   .whitespace-pre-line {
     white-space: pre-line !important;
-    line-height: 1.2 !important;
-    font-family: 'Courier New', monospace !important;
-    font-size: 8px !important;
+    line-height: 1.3 !important;
+    font-size: 10px !important;
   }
   
   /* Ensure table cells expand vertically */
   table td {
     vertical-align: top !important;
     word-wrap: break-word !important;
+  }
+  
+  /* Print-specific table styling */
+  table thead tr {
+    background: #e6f3ff !important;
+    color: #000 !important;
+  }
+  
+  table tbody tr:nth-child(even) {
+    background: #f8f9fa !important;
+  }
+  
+  table tbody tr:nth-child(odd) {
+    background: #ffffff !important;
   }
   
   .text-4xl {
