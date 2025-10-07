@@ -207,50 +207,42 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardContent>
       </Card>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="card-hover">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <User className="h-5 w-5 text-blue-600" />
-              Turvamehed
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {stats.guards.map((guard, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <Badge variant="secondary">{guard}</Badge>
-                  <span className="text-sm text-slate-600">
-                    ({monthlyShifts.filter(s => s.guard_name === guard).length} vahetust)
-                  </span>
-                </div>
-              ))}
+      {/* Compact Summary */}
+      <Card className="card-hover">
+        <CardHeader>
+          <CardTitle className="text-lg">Personal ja objektid</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <div className="font-medium text-sm text-slate-700 mb-2 flex items-center gap-1">
+                <User className="h-4 w-4" />
+                Turvamehed ({stats.guards.length})
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {stats.guards.map((guard, index) => (
+                  <Badge key={index} variant="secondary" className="text-xs">
+                    {guard} ({monthlyShifts.filter(s => s.guard_name === guard).length})
+                  </Badge>
+                ))}
+              </div>
             </div>
-          </CardContent>
-        </Card>
-
-        <Card className="card-hover">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Building className="h-5 w-5 text-green-600" />
-              Objektid
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {stats.objects.map((object, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <Badge variant="secondary">{object}</Badge>
-                  <span className="text-sm text-slate-600">
-                    ({monthlyShifts.filter(s => s.object_name === object).length} vahetust)
-                  </span>
-                </div>
-              ))}
+            <div>
+              <div className="font-medium text-sm text-slate-700 mb-2 flex items-center gap-1">
+                <Building className="h-4 w-4" />
+                Objektid ({stats.objects.length})
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {stats.objects.map((object, index) => (
+                  <Badge key={index} variant="secondary" className="text-xs">
+                    {object} ({monthlyShifts.filter(s => s.object_name === object).length})
+                  </Badge>
+                ))}
+              </div>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Detailed Shifts Table */}
       <Card className="card-hover">
