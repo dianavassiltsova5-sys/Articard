@@ -83,6 +83,8 @@ def parse_from_mongo(item):
 class GeneralIncident(BaseModel):
     type: IncidentType = IncidentType.GENERAL
     description: str
+    g4s_patrol_called: bool = False
+    ambulance_called: bool = False
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class TheftIncident(BaseModel):
@@ -92,6 +94,8 @@ class TheftIncident(BaseModel):
     special_tools_used: bool
     outcome: TheftOutcome
     description: str
+    g4s_patrol_called: bool = False
+    ambulance_called: bool = False
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class WorkShift(BaseModel):
