@@ -155,17 +155,20 @@ const Dashboard = ({ shifts, loading, onCreateShift, onDeleteShift }) => {
           </CardContent>
         </Card>
 
-        <Card className="card-hover">
+        <Card className="card-hover bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-amber-600" />
-              Intsidendid
+              <div className="p-2 bg-amber-600 rounded-lg">
+                <AlertTriangle className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-slate-700">Intsidendid</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-amber-600">
               {monthlyStats.totalIncidents}
             </div>
+            <p className="text-sm text-slate-600">intsidenti</p>
           </CardContent>
         </Card>
 
