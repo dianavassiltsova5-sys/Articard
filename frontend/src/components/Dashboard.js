@@ -18,13 +18,16 @@ const Dashboard = ({ shifts, loading, onCreateShift, onDeleteShift }) => {
 
   // Group shifts by date
   const shiftsByDate = shifts.reduce((acc, shift) => {
-    const dateKey = shift.date;
+    const dateKey = shift.date; // Already in 'YYYY-MM-DD' format from backend
     if (!acc[dateKey]) {
       acc[dateKey] = [];
     }
     acc[dateKey].push(shift);
     return acc;
   }, {});
+
+  console.log('Shifts by date:', shiftsByDate);
+  console.log('Selected date:', selectedDate ? format(selectedDate, 'yyyy-MM-dd') : 'None');
 
   // Get shifts for selected date
   const selectedDateShifts = selectedDate 
