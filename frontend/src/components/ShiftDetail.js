@@ -398,6 +398,16 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                           </SelectContent>
                         </Select>
                       </div>
+
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="theft_prevented"
+                          checked={incidentData.theft_prevented}
+                          onCheckedChange={(checked) => setIncidentData(prev => ({ ...prev, theft_prevented: checked }))}
+                          data-testid="theft-prevented-checkbox"
+                        />
+                        <Label htmlFor="theft_prevented" className="text-sm">Vargus ennetatud</Label>
+                      </div>
                     </>
                   )}
 
