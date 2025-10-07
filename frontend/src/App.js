@@ -115,6 +115,7 @@ function App() {
                   shifts={shifts}
                   loading={loading}
                   onCreateShift={createShift}
+                  onDeleteShift={deleteShift}
                 />
               } 
             />
