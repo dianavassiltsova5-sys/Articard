@@ -125,14 +125,49 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
           <ArrowLeft className="h-4 w-4 mr-2" />
           Tagasi
         </Button>
-        <Button 
-          onClick={handlePrintReport}
-          className="btn-primary"
-          data-testid="print-monthly-report-btn"
-        >
-          <Printer className="h-4 w-4 mr-2" />
-          Prindi aruanne
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button 
+            onClick={handlePrintReport}
+            className="btn-primary"
+            data-testid="print-monthly-report-btn"
+          >
+            <Printer className="h-4 w-4 mr-2" />
+            Prindi aruanne
+          </Button>
+          {monthlyShifts.length > 0 && (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button 
+                  variant="destructive"
+                  className="btn-secondary"
+                  data-testid="delete-all-shifts-trigger"
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Kustuta kõik vahetused
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Kas oled kindel?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    See tegevus kustutab KÕIK {monthlyShifts.length} vahetust kuust {monthName} 
+                    ja kõik nendega seotud intsidendid jäädavalt. Seda toimingut ei saa tagasi pöörata.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Tühista</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleDeleteAllShifts}
+                    className="bg-red-600 hover:bg-red-700"
+                    data-testid="confirm-delete-all-shifts"
+                  >
+                    Kustuta kõik ({monthlyShifts.length})
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
+        </div>
       </div>
 
       {/* Report Header */}
