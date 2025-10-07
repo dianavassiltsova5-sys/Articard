@@ -380,16 +380,21 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                     );
                   })}
                   {/* Summary Row */}
-                  <tr className="bg-blue-100 border-t-2 border-blue-200">
-                    <td className="border border-slate-300 p-2 text-xs font-bold" colSpan="3">KOKKU</td>
-                    <td className="border border-slate-300 p-2 text-xs font-bold">
-                      {stats.totalHours.toFixed(1)}
+                  <tr className="bg-gradient-to-r from-blue-100 to-blue-200 border-t-4 border-blue-400">
+                    <td className="border-r border-gray-300 p-3 text-sm font-bold text-blue-800" colSpan="3">KOKKU</td>
+                    <td className="border-r border-gray-300 p-3 text-sm font-bold text-blue-800">
+                      {stats.totalHours.toFixed(1)}h
                     </td>
-                    <td className="border border-slate-300 p-2 text-xs" colSpan="2">
+                    <td className="border-r border-gray-300 p-3 text-sm font-medium text-blue-700" colSpan="2">
                       {stats.totalShifts} vahetust, {stats.totalIncidents} intsidenti
                     </td>
-                    <td className="border border-slate-300 p-2 text-xs">
-                      Varguste kahju kokku: {stats.totalTheftAmount.toFixed(0)}€
+                    <td className="p-3 text-sm text-blue-700">
+                      <div className="space-y-1">
+                        <div>Varguste kahju: <span className="font-bold text-red-600">{stats.totalTheftAmount.toFixed(0)}€</span></div>
+                        {stats.preventedThefts > 0 && (
+                          <div>Ennetatud vargused: <span className="font-bold text-green-600">{stats.preventedTheftAmount.toFixed(0)}€</span></div>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 </tbody>
