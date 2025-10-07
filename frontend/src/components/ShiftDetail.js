@@ -96,6 +96,17 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
     window.print();
   };
 
+  const handleDeleteShift = async () => {
+    try {
+      await onDeleteShift(id);
+      toast.success('Vahetus kustutatud!');
+      navigate('/');
+    } catch (error) {
+      console.error('Error deleting shift:', error);
+      toast.error('Viga vahetuse kustutamisel');
+    }
+  };
+
   const calculateHours = () => {
     if (!shift) return 0;
     
