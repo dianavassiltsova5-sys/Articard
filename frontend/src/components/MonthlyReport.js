@@ -10,7 +10,7 @@ import {
 import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
 import { et } from 'date-fns/locale';
 
-const MonthlyReport = ({ shifts }) => {
+const MonthlyReport = ({ shifts, onDeleteShift }) => {
   const { year, month } = useParams();
   const navigate = useNavigate();
   const [monthlyShifts, setMonthlyShifts] = useState([]);
