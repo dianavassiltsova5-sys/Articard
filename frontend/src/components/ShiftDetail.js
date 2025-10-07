@@ -47,7 +47,9 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
       gender: 'mees',
       amount: 0,
       special_tools_used: false,
-      outcome: 'vabastatud'
+      outcome: 'vabastatud',
+      g4s_patrol_called: false,
+      ambulance_called: false
     });
     setIncidentType('general');
   };
