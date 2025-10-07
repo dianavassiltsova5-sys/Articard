@@ -122,6 +122,41 @@ body {
     margin-left: 0.5rem !important;
   }
   
+  /* Optimized table for print */
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+  }
+  
+  table th,
+  table td {
+    border: 1px solid #000 !important;
+    padding: 2px 4px !important;
+    vertical-align: top !important;
+  }
+  
+  table th {
+    background-color: #e6f3ff !important;
+    font-weight: bold !important;
+  }
+  
+  table tr:nth-child(even) {
+    background-color: #f8f9fa !important;
+  }
+  
+  /* Force table to fit page width */
+  .overflow-x-auto {
+    overflow: visible !important;
+  }
+  
+  /* Compact whitespace in table cells */
+  .whitespace-pre-line {
+    white-space: normal !important;
+    line-height: 1.1 !important;
+  }
+  
   .text-4xl {
     font-size: 1.5rem !important;
   }
