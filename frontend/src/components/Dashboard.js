@@ -71,8 +71,9 @@ const Dashboard = ({ shifts, loading, onCreateShift, onDeleteShift }) => {
   };
 
   const handleViewMonthlyReport = () => {
-    const year = selectedMonth.getFullYear();
-    const month = selectedMonth.getMonth() + 1;
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1;
     navigate(`/monthly-report/${year}/${month}`);
   };
 
