@@ -373,7 +373,7 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                           onCheckedChange={(checked) => setIncidentData(prev => ({ ...prev, special_tools_used: checked }))}
                           data-testid="special-tools-checkbox"
                         />
-                        <Label htmlFor="special_tools">Kasutati eriterendeid</Label>
+                        <Label htmlFor="special_tools">Kasutati erivahendeid</Label>
                       </div>
 
                       <div className="space-y-2">
