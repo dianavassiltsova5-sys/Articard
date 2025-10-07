@@ -278,6 +278,10 @@ class ArticardAPITester:
         self.test_get_shifts_by_month()
         self.test_nonexistent_shift()
         
+        # Test delete functionality (should be last since it removes the test shift)
+        self.test_delete_nonexistent_shift()
+        self.test_delete_shift()
+        
         # Print summary
         print("\n" + "=" * 60)
         print(f"📊 Test Summary:")
