@@ -138,17 +138,20 @@ const Dashboard = ({ shifts, loading, onCreateShift, onDeleteShift }) => {
           </CardContent>
         </Card>
 
-        <Card className="card-hover">
+        <Card className="card-hover bg-gradient-to-br from-green-50 to-green-100 border-green-200">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg flex items-center gap-2">
-              <CalendarIcon className="h-5 w-5 text-green-600" />
-              Vahetused
+              <div className="p-2 bg-green-600 rounded-lg">
+                <CalendarIcon className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-slate-700">Vahetused</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-green-600">
               {monthlyStats.totalShifts}
             </div>
+            <p className="text-sm text-slate-600">vahetust</p>
           </CardContent>
         </Card>
 
