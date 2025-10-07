@@ -17,7 +17,7 @@ import { format, parseISO } from 'date-fns';
 import { et } from 'date-fns/locale';
 import { toast } from 'sonner';
 
-const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident }) => {
+const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, onDeleteShift }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [shift, setShift] = useState(null);
