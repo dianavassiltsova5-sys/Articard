@@ -341,8 +341,10 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                             {shift.object_name}
                           </span>
                         </td>
-                        <td className="border border-slate-300 p-2 text-xs leading-relaxed">
-                          <div className="whitespace-pre-line">{remarksContent}</div>
+                        <td className="border border-slate-300 p-2 text-xs leading-relaxed align-top">
+                          <div className="whitespace-pre-line font-mono text-xs" style={{ lineHeight: '1.4' }}>
+                            {remarksContent}
+                          </div>
                         </td>
                       </tr>
                     );
