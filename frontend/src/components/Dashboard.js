@@ -81,10 +81,10 @@ const Dashboard = ({ shifts, loading, onCreateShift, onDeleteShift }) => {
   const handleDeleteShift = async (shiftId, shiftName) => {
     try {
       await onDeleteShift(shiftId);
-      // Show success message via toast
+      toast.success('Vahetus kustutatud!');
     } catch (error) {
       console.error('Error deleting shift:', error);
-      // Show error message via toast
+      toast.error('Viga vahetuse kustutamisel');
     }
   };
 
