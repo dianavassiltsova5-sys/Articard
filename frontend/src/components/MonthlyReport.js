@@ -183,68 +183,29 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardHeader>
       </Card>
 
-      {/* Monthly Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="card-hover">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Clock className="h-5 w-5 text-blue-600" />
-              Kogu tunnid
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-blue-600">
-              {stats.totalHours.toFixed(1)}
+      {/* Compact Monthly Statistics */}
+      <Card className="card-hover">
+        <CardContent className="p-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div className="space-y-1">
+              <div className="text-2xl font-bold text-blue-600">{stats.totalHours.toFixed(1)}</div>
+              <div className="text-xs text-slate-600">Tundi kokku</div>
             </div>
-            <p className="text-sm text-slate-600">tundi kokku</p>
-          </CardContent>
-        </Card>
-
-        <Card className="card-hover">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-green-600" />
-              Vahetused
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-green-600">
-              {stats.totalShifts}
+            <div className="space-y-1">
+              <div className="text-2xl font-bold text-green-600">{stats.totalShifts}</div>
+              <div className="text-xs text-slate-600">Vahetust</div>
             </div>
-            <p className="text-sm text-slate-600">vahetust</p>
-          </CardContent>
-        </Card>
-
-        <Card className="card-hover">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-amber-600" />
-              Intsidendid
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-amber-600">
-              {stats.totalIncidents}
+            <div className="space-y-1">
+              <div className="text-2xl font-bold text-amber-600">{stats.totalIncidents}</div>
+              <div className="text-xs text-slate-600">Intsidenti</div>
             </div>
-            <p className="text-sm text-slate-600">kokku ({stats.theftIncidents} vargust)</p>
-          </CardContent>
-        </Card>
-
-        <Card className="card-hover">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-purple-600" />
-              Vargused
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-purple-600">
-              {stats.totalTheftAmount.toFixed(0)}€
+            <div className="space-y-1">
+              <div className="text-2xl font-bold text-red-600">{stats.totalTheftAmount.toFixed(0)}€</div>
+              <div className="text-xs text-slate-600">Kahju</div>
             </div>
-            <p className="text-sm text-slate-600">kahju summa</p>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
