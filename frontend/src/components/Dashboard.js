@@ -246,21 +246,71 @@ const Dashboard = ({ shifts, loading, onCreateShift, onDeleteShift }) => {
                   {selectedDateShifts.map((shift) => (
                     <div 
                       key={shift.id} 
-                      className="border rounded-lg p-3 hover:bg-slate-50 transition-colors cursor-pointer"
-                      onClick={() => handleViewShift(shift.id)}
+                      className="border rounded-lg p-3 hover:bg-slate-50 transition-colors"
                       data-testid={`shift-card-${shift.id}`}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-slate-800">
+                        <span 
+                          className="font-medium text-slate-800 cursor-pointer hover:text-blue-600"
+                          onClick={() => handleViewShift(shift.id)}
+                        >
                           {shift.guard_name}
                         </span>
-                        <Badge 
-                          variant={shift.incidents && shift.incidents.length > 0 ? 'destructive' : 'secondary'}
-                        >
-                          {shift.start_time} - {shift.end_time}
-                        </Badge>
+                        <div className="flex items-center gap-2">
+                          <Badge 
+                            variant={shift.incidents && shift.incidents.length > 0 ? 'destructive' : 'secondary'}
+                          >
+                            {shift.start_time} - {shift.end_time}
+                          </Badge>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                <MoreVertical className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem onClick={() => handleViewShift(shift.id)}>
+                                Vaata detaile
+                              </DropdownMenuItem>
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <DropdownMenuItem 
+                                    onSelect={(e) => e.preventDefault()}
+                                    className="text-red-600 focus:text-red-600"
+                                    data-testid={`delete-shift-trigger-${shift.id}`}
+                                  >
+                                    <Trash2 className="h-4 w-4 mr-2" />
+                                    Kustuta vahetus
+                                  </DropdownMenuItem>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>Kas oled kindel?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      See tegevus kustutab vahetuse "{shift.guard_name}" ({format(parseISO(shift.date), 'dd.MM.yyyy')}) 
+                                      ja kõik sellega seotud intsidendid jäädavalt. Seda toimingut ei saa tagasi pöörata.
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>Tühista</AlertDialogCancel>
+                                    <AlertDialogAction
+                                      onClick={() => handleDeleteShift(shift.id, shift.guard_name)}
+                                      className="bg-red-600 hover:bg-red-700"
+                                      data-testid={`confirm-delete-shift-${shift.id}`}
+                                    >
+                                      Kustuta
+                                    </AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
                       </div>
-                      <p className="text-sm text-slate-600 mb-2">
+                      <p 
+                        className="text-sm text-slate-600 mb-2 cursor-pointer hover:text-blue-600"
+                        onClick={() => handleViewShift(shift.id)}
+                      >
                         Objekt: {shift.object_name}
                       </p>
                       {shift.incidents && shift.incidents.length > 0 && (
