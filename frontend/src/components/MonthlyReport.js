@@ -244,67 +244,96 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardContent>
       </Card>
 
-      {/* Detailed Shifts Table */}
+      {/* Detailed Daily Report */}
       <Card className="card-hover">
         <CardHeader>
-          <CardTitle>Detailne vahetuste ülevaade</CardTitle>
+          <CardTitle>Detailne päevaaruanne</CardTitle>
           <CardDescription>
-            Kõik {monthName} vahetused kronoloogilises järjekorras
+            {monthName} - kõik vahetused ja intsidendid päevade lõikes
           </CardDescription>
         </CardHeader>
         <CardContent>
           {monthlyShifts.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm" data-testid="monthly-shifts-table">
-                <thead>
-                  <tr className="border-b border-slate-200">
-                    <th className="text-left py-2 font-medium">Kuupäev</th>
-                    <th className="text-left py-2 font-medium">Turvamees</th>
-                    <th className="text-left py-2 font-medium">Objekt</th>
-                    <th className="text-left py-2 font-medium">Aeg</th>
-                    <th className="text-left py-2 font-medium">Tunnid</th>
-                    <th className="text-left py-2 font-medium">Intsidendid</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {monthlyShifts.map((shift, index) => {
-                    const startTime = new Date(`2000-01-01T${shift.start_time}`);
-                    const endTime = new Date(`2000-01-01T${shift.end_time}`);
-                    let hoursWorked = (endTime - startTime) / (1000 * 60 * 60);
-                    if (hoursWorked < 0) hoursWorked += 24;
-                    
-                    return (
-                      <tr key={shift.id} className="border-b border-slate-100 hover:bg-slate-50">
-                        <td className="py-3">
-                          {format(parseISO(shift.date), 'dd.MM.yyyy', { locale: et })}
-                        </td>
-                        <td className="py-3">{shift.guard_name}</td>
-                        <td className="py-3">{shift.object_name}</td>
-                        <td className="py-3">{shift.start_time} - {shift.end_time}</td>
-                        <td className="py-3 font-medium">{hoursWorked.toFixed(1)}h</td>
-                        <td className="py-3">
-                          {shift.incidents && shift.incidents.length > 0 ? (
-                            <div className="flex flex-wrap gap-1">
-                              {shift.incidents.map((incident, idx) => (
+            <div className="space-y-4" data-testid="monthly-shifts-detailed">
+              {monthlyShifts.map((shift, index) => {
+                const startTime = new Date(`2000-01-01T${shift.start_time}`);
+                const endTime = new Date(`2000-01-01T${shift.end_time}`);
+                let hoursWorked = (endTime - startTime) / (1000 * 60 * 60);
+                if (hoursWorked < 0) hoursWorked += 24;
+                
+                return (
+                  <div key={shift.id} className="border border-slate-200 rounded-lg p-4 hover:bg-slate-50 transition-colors">
+                    {/* Shift Header */}
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <Badge variant="outline" className="font-medium">
+                          {format(parseISO(shift.date), 'dd.MM.yyyy EEEE', { locale: et })}
+                        </Badge>
+                        <span className="font-semibold text-slate-800">{shift.guard_name}</span>
+                        <span className="text-slate-600">{shift.object_name}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <Badge variant="secondary">
+                          {shift.start_time} - {shift.end_time} ({hoursWorked.toFixed(1)}h)
+                        </Badge>
+                        {shift.incidents && shift.incidents.length > 0 && (
+                          <Badge variant="destructive" className="text-xs">
+                            {shift.incidents.length} intsident{shift.incidents.length !== 1 ? 'i' : ''}
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Incidents Details */}
+                    {shift.incidents && shift.incidents.length > 0 ? (
+                      <div className="space-y-3 ml-4 pl-4 border-l-2 border-amber-200">
+                        {shift.incidents.map((incident, idx) => (
+                          <div key={idx} className="bg-slate-50 rounded p-3 text-sm">
+                            <div className="flex items-start justify-between mb-2">
+                              <div className="flex items-center gap-2">
                                 <Badge 
-                                  key={idx}
                                   variant={incident.type === 'theft' ? 'destructive' : 'secondary'}
                                   className="text-xs"
                                 >
                                   {formatIncidentType(incident.type)}
-                                  {incident.type === 'theft' && ` (${incident.amount}€)`}
                                 </Badge>
-                              ))}
+                                {incident.timestamp && (
+                                  <span className="text-xs text-slate-500">
+                                    {format(parseISO(incident.timestamp), 'HH:mm')}
+                                  </span>
+                                )}
+                              </div>
+                              {incident.type === 'theft' && incident.amount > 0 && (
+                                <Badge variant="outline" className="text-xs bg-red-50 text-red-700">
+                                  {incident.amount}€
+                                </Badge>
+                              )}
                             </div>
-                          ) : (
-                            <span className="text-slate-400">-</span>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                            
+                            <div className="text-slate-700 mb-2">
+                              <strong>Kirjeldus:</strong> {incident.description}
+                            </div>
+                            
+                            {incident.type === 'theft' && (
+                              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs text-slate-600">
+                                <div><strong>Sugu:</strong> {formatGender(incident.gender)}</div>
+                                <div><strong>Erivahendid:</strong> {incident.special_tools_used ? 'Jah' : 'Ei'}</div>
+                                <div><strong>Tulemus:</strong> {formatOutcome(incident.outcome)}</div>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="ml-4 pl-4 border-l-2 border-green-200">
+                        <div className="text-sm text-green-700 bg-green-50 rounded p-2">
+                          ✅ Intsident-vaba vahetus
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <div className="text-center py-12 text-slate-500">
