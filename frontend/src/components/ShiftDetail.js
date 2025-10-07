@@ -167,14 +167,56 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
           <ArrowLeft className="h-4 w-4 mr-2" />
           Tagasi
         </Button>
-        <Button 
-          onClick={handlePrintReport}
-          className="btn-primary"
-          data-testid="print-report-btn"
-        >
-          <Printer className="h-4 w-4 mr-2" />
-          Prindi aruanne
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button 
+            onClick={handlePrintReport}
+            className="btn-primary"
+            data-testid="print-report-btn"
+          >
+            <Printer className="h-4 w-4 mr-2" />
+            Prindi aruanne
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm">
+                <MoreVertical className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <DropdownMenuItem 
+                    onSelect={(e) => e.preventDefault()}
+                    className="text-red-600 focus:text-red-600"
+                    data-testid="delete-shift-trigger"
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Kustuta vahetus
+                  </DropdownMenuItem>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Kas oled kindel?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      See tegevus kustutab vahetuse "{shift?.guard_name}" ({shift ? format(parseISO(shift.date), 'dd.MM.yyyy') : ''}) 
+                      ja kõik sellega seotud intsidendid jäädavalt. Seda toimingut ei saa tagasi pöörata.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Tühista</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDeleteShift}
+                      className="bg-red-600 hover:bg-red-700"
+                      data-testid="confirm-delete-shift"
+                    >
+                      Kustuta
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
 
       {/* Shift Header */}
