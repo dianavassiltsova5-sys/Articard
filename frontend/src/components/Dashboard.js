@@ -10,7 +10,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
 import { et } from 'date-fns/locale';
 
-const Dashboard = ({ shifts, loading, onCreateShift }) => {
+const Dashboard = ({ shifts, loading, onCreateShift, onDeleteShift }) => {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedMonth, setSelectedMonth] = useState(new Date());
