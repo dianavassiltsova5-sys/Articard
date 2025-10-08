@@ -251,8 +251,8 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </div>
       </div>
 
-      {/* Print Statistics - simplified for print only */}
-      <div className="print-only mb-4">
+      {/* Print Statistics - only for print, hidden on screen */}
+      <div className="hidden print:block mb-4">
         <div className="text-center text-sm">
           <div className="grid grid-cols-3 gap-4">
             <div>
