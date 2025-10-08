@@ -326,17 +326,29 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                         if (incident.type === 'theft') {
                           const details = [];
                           details.push(`Isik: ${formatGender(incident.gender)}`);
-                          if (incident.theft_prevented) {
-                            details.push(`Ennetatud summa: ${incident.amount}€`);
-                          } else {
-                            details.push(`Summa: ${incident.amount}€`);
-                          }
+                          
+                          // Amount with red styling
+                          const amountText = incident.theft_prevented ? 
+                            `Ennetatud summa: ${incident.amount}€` : 
+                            `Summa: ${incident.amount}€`;
+                          details.push(amountText);
+                          
                           details.push(`Erivahendid: ${incident.special_tools_used ? 'Jah' : 'Ei'}`);
-                          details.push(`G4S patrull: ${incident.g4s_patrol_called ? 'Jah' : 'Ei'}`);
-                          details.push(`Kiirabi: ${incident.ambulance_called ? 'Jah' : 'Ei'}`);
+                          
+                          // G4S with conditional styling
+                          const g4sText = incident.g4s_patrol_called ? 'Jah' : 'Ei';
+                          details.push(`G4S patrull: ${g4sText}`);
+                          
+                          // Ambulance with conditional styling
+                          const ambulanceText = incident.ambulance_called ? 'Jah' : 'Ei';
+                          details.push(`Kiirabi: ${ambulanceText}`);
+                          
+                          // Outcome with conditional styling
                           if (!incident.theft_prevented) {
-                            details.push(`Tulemus: ${formatOutcome(incident.outcome)}`);
+                            const outcomeText = formatOutcome(incident.outcome);
+                            details.push(`Tulemus: ${outcomeText}`);
                           }
+                          
                           lines.push(`   ${details.join(', ')}`);
                         }
                         
