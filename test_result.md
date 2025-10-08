@@ -158,8 +158,8 @@ frontend:
           comment: "Text already correctly updated to 'ennetatud varguse summa' in monthly report summary"
 
   - task: "Template system UI for shift creation"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: true
     file: "frontend/src/components/ShiftForm.js"
     stuck_count: 0
     priority: "high"
@@ -168,6 +168,9 @@ frontend:
         - working: "NA"
           agent: "main"
           comment: "Not implemented yet - need to add template functionality to shift creation form"
+        - working: true
+          agent: "testing"
+          comment: "Template system UI fully implemented and tested successfully. All core functionality working: 1) Template creation flow - 'Salvesta mallina' button enables when fields filled, opens dialog with preview, saves template with success message. 2) Template loading flow - Templates section appears with saved templates, clicking template button loads data into form fields with success message. 3) Template persistence - Templates persist after page refresh and across navigation. 4) Error handling - Proper validation for empty template names and disabled save button for empty fields. 5) Multiple templates support - Can create and manage multiple templates. Minor issue: Time fields show seconds (03:15:00) instead of just hours:minutes (03:15) when loaded from template, but this doesn't affect functionality. Backend integration working perfectly with MongoDB persistence."
 
 metadata:
   created_by: "main_agent"
