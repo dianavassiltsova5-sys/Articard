@@ -230,8 +230,8 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardContent>
       </Card>
 
-      {/* Compact Summary */}
-      <Card className="card-hover">
+      {/* Compact Summary - hidden in print */}
+      <Card className="card-hover no-print">
         <CardHeader>
           <CardTitle className="text-lg">Personal ja objektid</CardTitle>
         </CardHeader>
