@@ -343,6 +343,17 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                     />
                   </div>
 
+                  <div className="space-y-2">
+                    <Label htmlFor="incident_time">Intsidendi kellaaeg</Label>
+                    <Input
+                      id="incident_time"
+                      type="time"
+                      value={incidentData.incident_time}
+                      onChange={(e) => setIncidentData(prev => ({ ...prev, incident_time: e.target.value }))}
+                      data-testid="incident-time-input"
+                    />
+                  </div>
+
                   {incidentType === 'theft' && (
                     <>
                       <div className="space-y-2">
