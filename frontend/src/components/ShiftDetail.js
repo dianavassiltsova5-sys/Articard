@@ -488,25 +488,46 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
         </CardHeader>
         <CardContent>
           {shift.incidents && shift.incidents.length > 0 ? (
-            <div className="space-y-4" data-testid="incidents-list">
+            <div className="space-y-6" data-testid="incidents-list">
               {shift.incidents.map((incident, index) => (
                 <div 
                   key={index} 
-                  className="border rounded-lg p-4 bg-slate-50"
+                  className={`rounded-lg border-2 p-5 shadow-sm ${
+                    index % 4 === 0 ? 'bg-red-50 border-red-300 border-l-8 border-l-red-500' :
+                    index % 4 === 1 ? 'bg-amber-50 border-amber-300 border-l-8 border-l-amber-500' :
+                    index % 4 === 2 ? 'bg-emerald-50 border-emerald-300 border-l-8 border-l-emerald-500' :
+                    'bg-purple-50 border-purple-300 border-l-8 border-l-purple-500'
+                  }`}
                   data-testid={`incident-${index}`}
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <Badge 
-                        variant={incident.type === 'theft' ? 'destructive' : 'secondary'}
-                      >
-                        {formatIncidentType(incident.type)}
-                      </Badge>
-                      {incident.incident_time && (
-                        <span className="text-xs text-slate-600 font-bold">
-                          {incident.incident_time}
-                        </span>
-                      )}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`flex items-center gap-3 ${
+                      index % 4 === 0 ? 'text-red-800' :
+                      index % 4 === 1 ? 'text-amber-800' :
+                      index % 4 === 2 ? 'text-emerald-800' :
+                      'text-purple-800'
+                    }`}>
+                      <div className={`p-2 rounded-full ${
+                        index % 4 === 0 ? 'bg-red-200 text-red-700' :
+                        index % 4 === 1 ? 'bg-amber-200 text-amber-700' :
+                        index % 4 === 2 ? 'bg-emerald-200 text-emerald-700' :
+                        'bg-purple-200 text-purple-700'
+                      }`}>
+                        <AlertTriangle className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <div className="font-bold text-lg">
+                          {formatIncidentType(incident.type)}
+                          {incident.type === 'theft' && incident.theft_prevented && (
+                            <span className="bg-green-100 text-green-700 px-2 py-1 rounded ml-2 text-sm font-bold">ENNETATUD</span>
+                          )}
+                        </div>
+                        {incident.incident_time && (
+                          <div className="text-sm font-bold opacity-80">
+                            Kell {incident.incident_time}
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <Button
                       variant="ghost"
