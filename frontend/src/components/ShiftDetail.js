@@ -504,6 +504,17 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                   
                   <p className="text-sm mb-3">{incident.description}</p>
                   
+                  {incident.type === 'general' && (
+                    <div className="grid grid-cols-2 gap-4 text-xs text-slate-600 mb-3">
+                      <div>
+                        <span className="font-medium">G4S patrull:</span> {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
+                      </div>
+                      <div>
+                        <span className="font-medium">Kiirabi:</span> {incident.ambulance_called ? 'Jah' : 'Ei'}
+                      </div>
+                    </div>
+                  )}
+                  
                   {incident.type === 'theft' && (
                     <div className="space-y-2 mb-3">
                       {incident.theft_prevented && (
