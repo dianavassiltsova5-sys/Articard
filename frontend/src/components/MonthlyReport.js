@@ -311,15 +311,16 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                           </div>
                           {shift.incidents.map((incident, idx) => (
                             <div key={idx} className="bg-slate-50 rounded-lg p-3 space-y-2">
-                              <div className="font-medium mb-1">
+                              {/* Incident header */}
+                              <div className="font-medium text-sm">
                                 {incident.incident_time && (
-                                  <span className="font-bold text-slate-600">{incident.incident_time} - </span>
+                                  <span className="font-bold text-slate-700">Kell {incident.incident_time} - </span>
                                 )}
                                 <span className={incident.type === 'theft' ? 'text-red-600' : 'text-amber-600'}>
                                   {formatIncidentType(incident.type)}
                                 </span>
                                 {incident.type === 'theft' && incident.theft_prevented && (
-                                  <span className="bg-green-100 text-green-800 px-1 rounded ml-1 text-xs">ENNETATUD</span>
+                                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded ml-2 text-xs font-bold">ENNETATUD</span>
                                 )}
                               </div>
                               <div className="text-slate-600 mb-1 truncate">{incident.description}</div>
