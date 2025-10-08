@@ -165,6 +165,35 @@ class AuthResponse(BaseModel):
     authenticated: bool
     message: str
 
+# Authentication functions
+def get_client_ip(request: Request) -> str:
+    """Extract client IP from request headers"""
+    if "x-forwarded-for" in request.headers:
+        return request.headers["x-forwarded-for"].split(",")[0].strip()
+    elif "x-real-ip" in request.headers:
+        return request.headers["x-real-ip"]
+    return request.client.host
+
+def is_ip_authenticated(ip: str) -> bool:
+    """Check if IP is authenticated and not expired"""
+    if ip not in authenticated_ips:
+        return False
+    
+    auth_time = authenticated_ips[ip]
+    current_time = datetime.now(timezone.utc)
+    time_diff = (current_time - auth_time).total_seconds() / 60
+    
+    if time_diff > AUTH_TIMEOUT_MINUTES:
+        # Remove expired IP
+        del authenticated_ips[ip]
+        return False
+    
+    return True
+
+def authenticate_ip(ip: str):
+    """Mark IP as authenticated with current timestamp"""
+    authenticated_ips[ip] = datetime.now(timezone.utc)
+
 # Routes
 @api_router.get("/")
 async def root():
