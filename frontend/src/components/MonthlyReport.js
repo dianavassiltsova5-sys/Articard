@@ -183,12 +183,12 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
 
       {/* Report Header */}
       <Card className="card-hover">
-        <CardHeader className="text-center">
-          <CardTitle className="text-3xl flex items-center justify-center gap-3">
-            <FileText className="h-8 w-8 text-blue-600" />
+        <CardHeader className="text-center py-4">
+          <CardTitle className="text-2xl flex items-center justify-center gap-2">
+            <FileText className="h-6 w-6 text-blue-600" />
             Kuu Aruanne - {monthName}
           </CardTitle>
-          <CardDescription className="text-lg">
+          <CardDescription className="text-base">
             Articard Turvafirma | Töövahetus ülevaade
           </CardDescription>
         </CardHeader>
