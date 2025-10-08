@@ -180,7 +180,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Template system UI for shift creation"
+    - "Visual improvements - color coding for incidents"
+    - "Remove circle icons from monthly report"
+    - "Update text from 'varguste kahju' to 'ennetatud varguse summa'"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
