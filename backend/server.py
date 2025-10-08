@@ -129,6 +129,30 @@ class IncidentCreate(BaseModel):
     shift_id: str
     incident_data: dict  # Will contain either GeneralIncident or TheftIncident data
 
+class Template(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str  # Template name (e.g., "Mall 1", "Öövahetus")
+    object_name: str  # Default object name
+    guard_name: str   # Default guard name
+    start_time: Optional[time] = None  # Optional default start time
+    end_time: Optional[time] = None    # Optional default end time
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class TemplateCreate(BaseModel):
+    name: str
+    object_name: str
+    guard_name: str
+    start_time: Optional[time] = None
+    end_time: Optional[time] = None
+
+class TemplateUpdate(BaseModel):
+    name: Optional[str] = None
+    object_name: Optional[str] = None
+    guard_name: Optional[str] = None
+    start_time: Optional[time] = None
+    end_time: Optional[time] = None
+
 # Routes
 @api_router.get("/")
 async def root():
