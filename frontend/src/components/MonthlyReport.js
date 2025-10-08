@@ -343,7 +343,7 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                               shiftIndex % 4 === 2 ? 'bg-amber-200 text-amber-700' :
                               'bg-purple-200 text-purple-700'
                             }`}>
-                              <CalendarIcon className="h-5 w-5" />
+                              <Calendar className="h-5 w-5" />
                             </div>
                             <div>
                               <div className="text-xl font-bold">
