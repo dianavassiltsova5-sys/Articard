@@ -523,6 +523,12 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                         <div>
                           <span className="font-medium">Erivahendid:</span> {incident.special_tools_used ? 'Jah' : 'Ei'}
                         </div>
+                        <div>
+                          <span className="font-medium">G4S patrull:</span> {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
+                        </div>
+                        <div>
+                          <span className="font-medium">Kiirabi:</span> {incident.ambulance_called ? 'Jah' : 'Ei'}
+                        </div>
                         {!incident.theft_prevented && (
                           <div>
                             <span className="font-medium">Tulemus:</span> {formatOutcome(incident.outcome)}
