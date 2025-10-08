@@ -570,17 +570,15 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                             {incident.ambulance_called ? 'Jah' : 'Ei'}
                           </span>
                         </div>
-                        {!incident.theft_prevented && (
-                          <div>
-                            <span className="font-medium">Tulemus:</span> 
-                            <span className={
-                              incident.outcome === 'politsei' ? 'text-red-600 font-bold ml-1' :
-                              (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold ml-1' : 'ml-1'
-                            }>
-                              {formatOutcome(incident.outcome)}
-                            </span>
-                          </div>
-                        )}
+                        <div>
+                          <span className="font-medium">Tulemus:</span> 
+                          <span className={
+                            incident.outcome === 'politsei' ? 'text-red-600 font-bold ml-1' :
+                            (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold ml-1' : 'ml-1'
+                          }>
+                            {formatOutcome(incident.outcome)}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   )}
