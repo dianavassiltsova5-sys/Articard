@@ -263,7 +263,7 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
           {monthlyShifts.length > 0 ? (
             <div data-testid="monthly-shifts-cards">
               {/* Compact Shift Cards Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                 {monthlyShifts.map((shift, index) => {
                   const startTime = new Date(`2000-01-01T${shift.start_time}`);
                   const endTime = new Date(`2000-01-01T${shift.end_time}`);
