@@ -32,6 +32,65 @@ const ShiftForm = ({ onSubmit, onCancel, initialData }) => {
 
   const backendUrl = process.env.REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL;
 
+  useEffect(() => {
+    fetchTemplates();
+  }, []);
+
+  const fetchTemplates = async () => {
+    try {
+      const response = await axios.get(`${backendUrl}/api/templates`);
+      setTemplates(response.data);
+    } catch (error) {
+      console.error('Error fetching templates:', error);
+    }
+  };
+
+  const loadTemplate = (template) => {
+    setFormData(prev => ({
+      ...prev,
+      object_name: template.object_name,
+      guard_name: template.guard_name,
+      start_time: template.start_time || '',
+      end_time: template.end_time || ''
+    }));
+    toast.success(`Mall "${template.name}" laaditud!`);
+  };
+
+  const handleSaveTemplate = async () => {
+    if (!templateName.trim()) {
+      toast.error('Palun sisesta malli nimi');
+      return;
+    }
+
+    if (!formData.object_name.trim() || !formData.guard_name.trim()) {
+      toast.error('Palun täida objekti ja turvamehe nimi');
+      return;
+    }
+
+    setIsSavingTemplate(true);
+    try {
+      const templateData = {
+        name: templateName.trim(),
+        object_name: formData.object_name.trim(),
+        guard_name: formData.guard_name.trim(),
+        start_time: formData.start_time || null,
+        end_time: formData.end_time || null
+      };
+
+      await axios.post(`${backendUrl}/api/templates`, templateData);
+      toast.success(`Mall "${templateName}" salvestatud!`);
+      
+      await fetchTemplates(); // Refresh templates list
+      setShowSaveTemplate(false);
+      setTemplateName('');
+    } catch (error) {
+      console.error('Error saving template:', error);
+      toast.error('Viga malli salvestamisel');
+    } finally {
+      setIsSavingTemplate(false);
+    }
+  };
+
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
       ...prev,
