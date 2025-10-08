@@ -70,11 +70,15 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
       const incident = {
         type: incidentType,
         description: incidentData.description.trim(),
+        incident_time: incidentData.incident_time,
+        g4s_patrol_called: incidentData.g4s_patrol_called,
+        ambulance_called: incidentData.ambulance_called,
         ...(incidentType === 'theft' && {
           gender: incidentData.gender,
           amount: parseFloat(incidentData.amount),
           special_tools_used: incidentData.special_tools_used,
-          outcome: incidentData.outcome
+          outcome: incidentData.outcome,
+          theft_prevented: incidentData.theft_prevented
         })
       };
       
