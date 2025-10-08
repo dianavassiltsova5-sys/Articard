@@ -384,7 +384,7 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                           {shift.guard_name}
                         </td>
                         <td className="border-r border-gray-200 p-3 text-sm">
-                          <span className="inline-block px-3 py-1 bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-800 rounded-full text-xs font-medium border border-yellow-300">
+                          <span className="text-slate-700 font-medium">
                             {shift.object_name}
                           </span>
                         </td>
