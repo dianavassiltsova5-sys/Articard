@@ -342,10 +342,8 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                           details.push(`Kiirabi: ${ambulanceText}`);
                           
                           // Outcome with conditional styling
-                          if (!incident.theft_prevented) {
-                            const outcomeText = formatOutcome(incident.outcome);
-                            details.push(`Tulemus: ${outcomeText}`);
-                          }
+                          const outcomeText = formatOutcome(incident.outcome);
+                          details.push(`Tulemus: ${outcomeText}`);
                           
                           lines.push(`   ${details.join(', ')}`);
                         }
