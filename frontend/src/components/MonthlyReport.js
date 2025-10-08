@@ -396,8 +396,6 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                                 let mainLine = `${idx + 1}. `;
                                 if (incident.incident_time) {
                                   mainLine += `Kell ${incident.incident_time} - `;
-                                } else if (incident.timestamp) {
-                                  mainLine += `Kell ${format(parseISO(incident.timestamp), 'HH:mm')} - `;
                                 }
                                 mainLine += `${formatIncidentType(incident.type)}`;
                                 
