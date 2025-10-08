@@ -199,6 +199,28 @@ def authenticate_ip(ip: str):
 async def root():
     return {"message": "Articard Turvafirma - Töövahetus System"}
 
+# Authentication endpoints
+@api_router.post("/auth/login", response_model=AuthResponse)
+async def login(request: Request, login_data: LoginRequest):
+    """Authenticate user with password and IP tracking"""
+    client_ip = get_client_ip(request)
+    
+    if login_data.password == AUTH_PASSWORD:
+        authenticate_ip(client_ip)
+        return AuthResponse(authenticated=True, message="Authentication successful")
+    else:
+        return AuthResponse(authenticated=False, message="Invalid password")
+
+@api_router.get("/auth/check", response_model=AuthResponse)
+async def check_auth(request: Request):
+    """Check if current IP is authenticated"""
+    client_ip = get_client_ip(request)
+    
+    if is_ip_authenticated(client_ip):
+        return AuthResponse(authenticated=True, message="Already authenticated")
+    else:
+        return AuthResponse(authenticated=False, message="Authentication required")
+
 @api_router.post("/shifts", response_model=WorkShift)
 async def create_shift(shift_data: WorkShiftCreate):
     shift = WorkShift(**shift_data.dict())
