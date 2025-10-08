@@ -411,7 +411,7 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                           <SelectContent>
                             <SelectItem value="vabastatud">Vabastatud</SelectItem>
                             <SelectItem value="maksis_vabastatud">Maksis ja vabastatud</SelectItem>
-                            <SelectItem value="politsei">Antud politseisse</SelectItem>
+                            <SelectItem value="politsei">Üle antud politseisse</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
