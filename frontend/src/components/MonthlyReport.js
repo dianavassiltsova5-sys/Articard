@@ -310,64 +310,66 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                         
                         {/* Incidents */}
                         {shift.incidents && shift.incidents.length > 0 ? (
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-1">
-                              <AlertTriangle className="h-3 w-3 text-amber-600" />
-                              <span className="text-xs font-medium text-slate-700">
-                                {shift.incidents.length} int.
+                          <div className="space-y-3">
+                            <div className="flex items-center gap-2">
+                              <AlertTriangle className="h-4 w-4 text-amber-600" />
+                              <span className="text-sm font-medium text-slate-700">
+                                {shift.incidents.length} intsident{shift.incidents.length !== 1 ? 'i' : ''}
                               </span>
                             </div>
                             {shift.incidents.map((incident, idx) => (
-                              <div key={idx} className="bg-slate-50 rounded p-2 text-xs space-y-1">
-                                <div className="font-medium">
+                              <div key={idx} className="bg-slate-50 rounded-lg p-3 space-y-2">
+                                <div className="font-medium text-sm">
                                   {incident.incident_time && (
-                                    <span className="font-bold text-slate-700">{incident.incident_time} - </span>
+                                    <span className="font-bold text-slate-700">Kell {incident.incident_time} - </span>
                                   )}
                                   <span className={incident.type === 'theft' ? 'text-red-600' : 'text-amber-600'}>
                                     {formatIncidentType(incident.type)}
                                   </span>
                                   {incident.type === 'theft' && incident.theft_prevented && (
-                                    <span className="bg-green-100 text-green-700 px-1 rounded ml-1 text-xs">ENE</span>
+                                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded ml-2 text-xs font-bold">ENNETATUD</span>
                                   )}
                                 </div>
                                 
-                                <div className="text-slate-600 text-xs bg-white rounded p-1">
-                                  <span className="font-medium">Kirj:</span> {incident.description.length > 40 ? `${incident.description.substring(0, 40)}...` : incident.description}
+                                <div className="text-slate-700 text-sm bg-white rounded p-2">
+                                  <span className="font-medium">Kirjeldus:</span> {incident.description.length > 60 ? `${incident.description.substring(0, 60)}...` : incident.description}
                                 </div>
                                 
                                 {incident.type === 'theft' && (
-                                  <div className="grid grid-cols-2 gap-1 text-xs">
+                                  <div className="grid grid-cols-2 gap-2 text-sm">
                                     <div>
-                                      <span className="text-slate-500">Isik:</span> {formatGender(incident.gender)}
+                                      <span className="font-medium text-slate-600">Isik:</span> 
+                                      <span className="ml-1">{formatGender(incident.gender)}</span>
                                     </div>
                                     <div>
-                                      <span className="text-slate-500">
-                                        {incident.theft_prevented ? 'Enn:' : 'Sum:'}
+                                      <span className="font-medium text-slate-600">
+                                        {incident.theft_prevented ? 'Ennetatud:' : 'Summa:'}
                                       </span> 
                                       <span className={incident.theft_prevented ? 'text-green-600 font-bold ml-1' : 'text-red-600 font-bold ml-1'}>
                                         {incident.amount}€
                                       </span>
                                     </div>
                                     <div>
-                                      <span className="text-slate-500">Eriv:</span> {incident.special_tools_used ? 'Jah' : 'Ei'}
+                                      <span className="font-medium text-slate-600">Erivahendid:</span>
+                                      <span className="ml-1">{incident.special_tools_used ? 'Jah' : 'Ei'}</span>
                                     </div>
                                     <div>
-                                      <span className="text-slate-500">Tul:</span> 
+                                      <span className="font-medium text-slate-600">Tulemus:</span> 
                                       <span className={
                                         incident.outcome === 'politsei' ? 'text-red-600 font-bold ml-1' :
                                         (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold ml-1' : 'ml-1'
                                       }>
-                                        {formatOutcome(incident.outcome).substring(0, 8)}
+                                        {formatOutcome(incident.outcome)}
                                       </span>
                                     </div>
                                     <div>
-                                      <span className="text-slate-500">G4S:</span> 
+                                      <span className="font-medium text-slate-600">G4S patrull:</span> 
                                       <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
                                         {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
                                       </span>
                                     </div>
                                     <div>
-                                      <span className="text-slate-500">Kiir:</span> 
+                                      <span className="font-medium text-slate-600">Kiirabi:</span> 
                                       <span className={incident.ambulance_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
                                         {incident.ambulance_called ? 'Jah' : 'Ei'}
                                       </span>
@@ -376,15 +378,15 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                                 )}
                                 
                                 {incident.type === 'general' && (
-                                  <div className="grid grid-cols-2 gap-1 text-xs">
+                                  <div className="grid grid-cols-2 gap-2 text-sm">
                                     <div>
-                                      <span className="text-slate-500">G4S:</span> 
+                                      <span className="font-medium text-slate-600">G4S patrull:</span> 
                                       <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
                                         {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
                                       </span>
                                     </div>
                                     <div>
-                                      <span className="text-slate-500">Kiir:</span> 
+                                      <span className="font-medium text-slate-600">Kiirabi:</span> 
                                       <span className={incident.ambulance_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
                                         {incident.ambulance_called ? 'Jah' : 'Ei'}
                                       </span>
@@ -395,8 +397,8 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                             ))}
                           </div>
                         ) : (
-                          <div className="text-xs text-slate-400 text-center py-2">
-                            Ei ole intsidenti
+                          <div className="text-sm text-slate-400 text-center py-3 border-t">
+                            Intsidendid puuduvad
                           </div>
                         )}
                       </div>
