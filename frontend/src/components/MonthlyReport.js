@@ -322,12 +322,37 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                     <AlertTriangle className="h-5 w-5 text-amber-600" />
                     Intsidendid ja vargused
                   </h3>
-                  <div className="space-y-4">
-                    {monthlyShifts.map((shift) => (
+                  <div className="space-y-6">
+                    {monthlyShifts.map((shift, shiftIndex) => (
                       shift.incidents && shift.incidents.length > 0 && (
-                        <div key={shift.id} className="bg-white rounded-lg border border-slate-200 p-4 break-inside-avoid page-break-inside-avoid">
-                          <div className="font-bold text-slate-800 mb-3 pb-2 border-b border-slate-200">
-                            {format(parseISO(shift.date), 'dd.MM.yyyy')} - {shift.guard_name} ({shift.object_name})
+                        <div key={shift.id} className={`rounded-lg border-2 p-5 break-inside-avoid page-break-inside-avoid shadow-sm ${
+                          shiftIndex % 4 === 0 ? 'bg-blue-50 border-blue-300 border-l-8 border-l-blue-500' :
+                          shiftIndex % 4 === 1 ? 'bg-green-50 border-green-300 border-l-8 border-l-green-500' :
+                          shiftIndex % 4 === 2 ? 'bg-amber-50 border-amber-300 border-l-8 border-l-amber-500' :
+                          'bg-purple-50 border-purple-300 border-l-8 border-l-purple-500'
+                        }`}>
+                          <div className={`font-bold text-lg mb-4 pb-3 border-b-2 flex items-center gap-3 ${
+                            shiftIndex % 4 === 0 ? 'text-blue-800 border-blue-300' :
+                            shiftIndex % 4 === 1 ? 'text-green-800 border-green-300' :
+                            shiftIndex % 4 === 2 ? 'text-amber-800 border-amber-300' :
+                            'text-purple-800 border-purple-300'
+                          }`}>
+                            <div className={`p-2 rounded-full ${
+                              shiftIndex % 4 === 0 ? 'bg-blue-200 text-blue-700' :
+                              shiftIndex % 4 === 1 ? 'bg-green-200 text-green-700' :
+                              shiftIndex % 4 === 2 ? 'bg-amber-200 text-amber-700' :
+                              'bg-purple-200 text-purple-700'
+                            }`}>
+                              <CalendarIcon className="h-5 w-5" />
+                            </div>
+                            <div>
+                              <div className="text-xl font-bold">
+                                {format(parseISO(shift.date), 'dd.MM.yyyy')}
+                              </div>
+                              <div className="text-sm font-normal opacity-80">
+                                {shift.guard_name} • {shift.object_name}
+                              </div>
+                            </div>
                           </div>
                           <div className="space-y-3">
                             {shift.incidents.map((incident, idx) => (
