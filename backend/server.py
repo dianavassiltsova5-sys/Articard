@@ -158,6 +158,13 @@ class TemplateUpdate(BaseModel):
     start_time: Optional[time] = None
     end_time: Optional[time] = None
 
+class LoginRequest(BaseModel):
+    password: str
+
+class AuthResponse(BaseModel):
+    authenticated: bool
+    message: str
+
 # Routes
 @api_router.get("/")
 async def root():
