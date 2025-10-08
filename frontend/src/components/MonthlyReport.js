@@ -455,8 +455,7 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
       {/* Print Footer */}
       <div className="print-only mt-4 pt-2 border-t border-slate-200">
         <div className="text-center text-xs text-slate-600 space-y-1">
-          <p>Articard Turvafirma | Litsents nr. TJT000000 | Tel: +372 000 0000 | info@articard.ee</p>
-          <p>Kokkuvõte: {stats.totalHours.toFixed(1)}h | {stats.totalShifts} vahetust | {stats.totalIncidents} intsidenti</p>
+          <p>Kokkuvõte: {stats.totalShifts} vahetust | {stats.totalIncidents} intsidenti</p>
           <p>Konfidentsiaalne dokument - ainult ametlikuks kasutamiseks</p>
         </div>
       </div>
