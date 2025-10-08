@@ -146,7 +146,7 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
     switch (outcome) {
       case 'vabastatud': return 'Vabastatud';
       case 'maksis_vabastatud': return 'Maksis ja vabastatud';
-      case 'politsei': return 'Antud politseisse';
+      case 'politsei': return 'Üle antud politseisse';
       default: return outcome;
     }
   };
