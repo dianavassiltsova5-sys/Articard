@@ -261,116 +261,133 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardHeader>
         <CardContent>
           {monthlyShifts.length > 0 ? (
-            <div data-testid="monthly-shifts-cards">
-              {/* Ultra Compact Shift Cards - 2 dates per card */}
-              <div className="space-y-4 mb-6">
-                {Array.from({ length: Math.ceil(monthlyShifts.length / 2) }, (_, pairIndex) => {
-                  const leftShift = monthlyShifts[pairIndex * 2];
-                  const rightShift = monthlyShifts[pairIndex * 2 + 1];
-                  
-                  const getShiftHours = (shift) => {
-                    const startTime = new Date(`2000-01-01T${shift.start_time}`);
-                    const endTime = new Date(`2000-01-01T${shift.end_time}`);
-                    let hoursWorked = (endTime - startTime) / (1000 * 60 * 60);
-                    if (hoursWorked < 0) hoursWorked += 24;
-                    return hoursWorked;
-                  };
+            <div data-testid="monthly-shifts-data">
+              {/* Shifts Table */}
+              <div className="mb-8">
+                <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-blue-600" />
+                  Vahetused
+                </h3>
+                <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                  <table className="w-full">
+                    <thead className="bg-blue-50">
+                      <tr>
+                        <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Kuupäev</th>
+                        <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Algus</th>
+                        <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Lõpp</th>
+                        <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Tunnid</th>
+                        <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Turvamees</th>
+                        <th className="px-4 py-3 text-left text-sm font-semibold text-slate-700 border-b">Objekt</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {monthlyShifts.map((shift, index) => {
+                        const startTime = new Date(`2000-01-01T${shift.start_time}`);
+                        const endTime = new Date(`2000-01-01T${shift.end_time}`);
+                        let hoursWorked = (endTime - startTime) / (1000 * 60 * 60);
+                        if (hoursWorked < 0) hoursWorked += 24;
+                        
+                        return (
+                          <tr key={shift.id} className={`${index % 2 === 0 ? 'bg-white' : 'bg-slate-50'} hover:bg-blue-50 transition-colors`}>
+                            <td className="px-4 py-3 text-sm font-medium text-slate-800 border-b border-slate-100">
+                              {format(parseISO(shift.date), 'dd.MM.yyyy')}
+                            </td>
+                            <td className="px-4 py-3 text-sm text-slate-700 border-b border-slate-100">
+                              {shift.start_time}
+                            </td>
+                            <td className="px-4 py-3 text-sm text-slate-700 border-b border-slate-100">
+                              {shift.end_time}
+                            </td>
+                            <td className="px-4 py-3 text-sm font-bold text-blue-700 border-b border-slate-100">
+                              {hoursWorked.toFixed(1)}h
+                            </td>
+                            <td className="px-4 py-3 text-sm font-medium text-slate-800 border-b border-slate-100">
+                              {shift.guard_name}
+                            </td>
+                            <td className="px-4 py-3 text-sm text-slate-700 border-b border-slate-100">
+                              {shift.object_name}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
 
-                  const renderShift = (shift, side) => {
-                    if (!shift) return null;
-                    const hoursWorked = getShiftHours(shift);
-                    
-                    return (
-                      <div className={`${side === 'right' ? 'border-l pl-4' : 'pr-4'} flex-1`}>
-                        {/* Date and hours header */}
-                        <div className="flex justify-between items-center mb-3">
-                          <div className="text-xl font-bold text-slate-800">
-                            {format(parseISO(shift.date), 'dd.MM')}
+              {/* Incidents List */}
+              {monthlyShifts.some(shift => shift.incidents && shift.incidents.length > 0) && (
+                <div className="mb-8">
+                  <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <AlertTriangle className="h-5 w-5 text-amber-600" />
+                    Intsidendid ja vargused
+                  </h3>
+                  <div className="space-y-4">
+                    {monthlyShifts.map((shift) => (
+                      shift.incidents && shift.incidents.length > 0 && (
+                        <div key={shift.id} className="bg-white rounded-lg border border-slate-200 p-4">
+                          <div className="font-bold text-slate-800 mb-3 pb-2 border-b border-slate-200">
+                            {format(parseISO(shift.date), 'dd.MM.yyyy')} - {shift.guard_name} ({shift.object_name})
                           </div>
-                          <div className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-medium">
-                            {hoursWorked.toFixed(1)}h
-                          </div>
-                        </div>
-                        
-                        {/* Time and personnel */}
-                        <div className="space-y-2 mb-4 text-sm">
-                          <div className="flex items-center gap-2">
-                            <Clock className="h-4 w-4 text-slate-500" />
-                            <span className="text-slate-700">{shift.start_time} - {shift.end_time}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <User className="h-4 w-4 text-emerald-600" />
-                            <span className="font-medium text-slate-700">{shift.guard_name}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Building className="h-4 w-4 text-blue-600" />
-                            <span className="text-slate-600" title={shift.object_name}>{shift.object_name.length > 25 ? `${shift.object_name.substring(0, 25)}...` : shift.object_name}</span>
-                          </div>
-                        </div>
-                        
-                        {/* Incidents */}
-                        {shift.incidents && shift.incidents.length > 0 ? (
                           <div className="space-y-3">
-                            <div className="flex items-center gap-2">
-                              <AlertTriangle className="h-4 w-4 text-amber-600" />
-                              <span className="text-sm font-medium text-slate-700">
-                                {shift.incidents.length} intsident{shift.incidents.length !== 1 ? 'i' : ''}
-                              </span>
-                            </div>
                             {shift.incidents.map((incident, idx) => (
-                              <div key={idx} className="bg-slate-50 rounded-lg p-3 space-y-2">
-                                <div className="font-medium text-sm">
-                                  {incident.incident_time && (
-                                    <span className="font-bold text-slate-700">Kell {incident.incident_time} - </span>
-                                  )}
-                                  <span className={incident.type === 'theft' ? 'text-red-600' : 'text-amber-600'}>
-                                    {formatIncidentType(incident.type)}
-                                  </span>
-                                  {incident.type === 'theft' && incident.theft_prevented && (
-                                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded ml-2 text-xs font-bold">ENNETATUD</span>
-                                  )}
+                              <div key={idx} className="bg-slate-50 rounded-lg p-4">
+                                <div className="flex items-start justify-between mb-3">
+                                  <div>
+                                    <div className="font-medium text-sm mb-1">
+                                      {incident.incident_time && (
+                                        <span className="font-bold text-slate-700">Kell {incident.incident_time} - </span>
+                                      )}
+                                      <span className={incident.type === 'theft' ? 'text-red-600' : 'text-amber-600'}>
+                                        {formatIncidentType(incident.type)}
+                                      </span>
+                                      {incident.type === 'theft' && incident.theft_prevented && (
+                                        <span className="bg-green-100 text-green-700 px-2 py-1 rounded ml-2 text-xs font-bold">ENNETATUD</span>
+                                      )}
+                                    </div>
+                                  </div>
                                 </div>
                                 
-                                <div className="text-slate-700 text-sm bg-white rounded p-2">
-                                  <span className="font-medium">Kirjeldus:</span> {incident.description.length > 60 ? `${incident.description.substring(0, 60)}...` : incident.description}
+                                <div className="mb-3 p-3 bg-white rounded">
+                                  <span className="font-medium text-slate-700">Kirjeldus:</span> {incident.description}
                                 </div>
                                 
                                 {incident.type === 'theft' && (
-                                  <div className="grid grid-cols-2 gap-2 text-sm">
-                                    <div>
-                                      <span className="font-medium text-slate-600">Isik:</span> 
-                                      <span className="ml-1">{formatGender(incident.gender)}</span>
+                                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+                                    <div className="bg-white p-2 rounded">
+                                      <span className="font-medium text-slate-600">Isik:</span><br/>
+                                      <span>{formatGender(incident.gender)}</span>
                                     </div>
-                                    <div>
+                                    <div className="bg-white p-2 rounded">
                                       <span className="font-medium text-slate-600">
-                                        {incident.theft_prevented ? 'Ennetatud:' : 'Summa:'}
-                                      </span> 
-                                      <span className={incident.theft_prevented ? 'text-green-600 font-bold ml-1' : 'text-red-600 font-bold ml-1'}>
+                                        {incident.theft_prevented ? 'Ennetatud summa:' : 'Summa:'}
+                                      </span><br/>
+                                      <span className={incident.theft_prevented ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
                                         {incident.amount}€
                                       </span>
                                     </div>
-                                    <div>
-                                      <span className="font-medium text-slate-600">Erivahendid:</span>
-                                      <span className="ml-1">{incident.special_tools_used ? 'Jah' : 'Ei'}</span>
+                                    <div className="bg-white p-2 rounded">
+                                      <span className="font-medium text-slate-600">Erivahendid:</span><br/>
+                                      <span>{incident.special_tools_used ? 'Jah' : 'Ei'}</span>
                                     </div>
-                                    <div>
-                                      <span className="font-medium text-slate-600">Tulemus:</span> 
+                                    <div className="bg-white p-2 rounded">
+                                      <span className="font-medium text-slate-600">Tulemus:</span><br/>
                                       <span className={
-                                        incident.outcome === 'politsei' ? 'text-red-600 font-bold ml-1' :
-                                        (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold ml-1' : 'ml-1'
+                                        incident.outcome === 'politsei' ? 'text-red-600 font-bold' :
+                                        (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold' : ''
                                       }>
                                         {formatOutcome(incident.outcome)}
                                       </span>
                                     </div>
-                                    <div>
-                                      <span className="font-medium text-slate-600">G4S patrull:</span> 
-                                      <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                                    <div className="bg-white p-2 rounded">
+                                      <span className="font-medium text-slate-600">G4S patrull:</span><br/>
+                                      <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold' : ''}>
                                         {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
                                       </span>
                                     </div>
-                                    <div>
-                                      <span className="font-medium text-slate-600">Kiirabi:</span> 
-                                      <span className={incident.ambulance_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                                    <div className="bg-white p-2 rounded">
+                                      <span className="font-medium text-slate-600">Kiirabi:</span><br/>
+                                      <span className={incident.ambulance_called ? 'text-red-600 font-bold' : ''}>
                                         {incident.ambulance_called ? 'Jah' : 'Ei'}
                                       </span>
                                     </div>
@@ -378,16 +395,16 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                                 )}
                                 
                                 {incident.type === 'general' && (
-                                  <div className="grid grid-cols-2 gap-2 text-sm">
-                                    <div>
-                                      <span className="font-medium text-slate-600">G4S patrull:</span> 
-                                      <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                                  <div className="grid grid-cols-2 gap-3 text-sm">
+                                    <div className="bg-white p-2 rounded">
+                                      <span className="font-medium text-slate-600">G4S patrull:</span><br/>
+                                      <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold' : ''}>
                                         {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
                                       </span>
                                     </div>
-                                    <div>
-                                      <span className="font-medium text-slate-600">Kiirabi:</span> 
-                                      <span className={incident.ambulance_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                                    <div className="bg-white p-2 rounded">
+                                      <span className="font-medium text-slate-600">Kiirabi:</span><br/>
+                                      <span className={incident.ambulance_called ? 'text-red-600 font-bold' : ''}>
                                         {incident.ambulance_called ? 'Jah' : 'Ei'}
                                       </span>
                                     </div>
@@ -396,27 +413,14 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                               </div>
                             ))}
                           </div>
-                        ) : (
-                          <div className="text-sm text-slate-400 text-center py-3 border-t">
-                            Intsidendid puuduvad
-                          </div>
-                        )}
-                      </div>
-                    );
-                  };
-
-                  return (
-                    <div key={pairIndex} className="bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 break-inside-avoid page-break-inside-avoid">
-                      <div className="flex">
-                        {renderShift(leftShift, 'left')}
-                        {rightShift && renderShift(rightShift, 'right')}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+                        </div>
+                      )
+                    ))}
+                  </div>
+                </div>
+              )}
               
-              {/* Summary Card */}
+              {/* Summary Statistics */}
               <div className="bg-gradient-to-r from-blue-50 to-slate-50 border border-blue-200 rounded-lg p-4">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
