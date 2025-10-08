@@ -98,6 +98,7 @@ class TheftIncident(BaseModel):
     g4s_patrol_called: bool = False
     ambulance_called: bool = False
     theft_prevented: bool = False  # New field for prevented theft
+    incident_time: str = ""  # Time in HH:MM format
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class WorkShift(BaseModel):
