@@ -151,11 +151,14 @@ frontend:
     file: "frontend/src/components/MonthlyReport.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: true
           agent: "main"
           comment: "Text already correctly updated to 'ennetatud varguse summa' in monthly report summary"
+        - working: true
+          agent: "main"
+          comment: "Fixed remaining 'Varguse kahju' text in monthly report statistics card (line 215) - changed to 'Ennetatud varguse summa' to match user requirements"
 
   - task: "Template system UI for shift creation"
     implemented: true
