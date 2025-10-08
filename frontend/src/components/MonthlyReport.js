@@ -194,10 +194,10 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardHeader>
       </Card>
 
-      {/* Full Monthly Statistics - screen view only */}
+      {/* Simplified Statistics */}
       <Card className="card-hover no-print">
         <CardContent className="p-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div className="grid grid-cols-3 gap-4 text-center">
             <div className="space-y-1">
               <div className="text-2xl font-bold text-blue-600">{stats.totalHours.toFixed(1)}</div>
               <div className="text-xs text-slate-600">Tundi kokku</div>
@@ -207,33 +207,14 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
               <div className="text-xs text-slate-600">Vahetust</div>
             </div>
             <div className="space-y-1">
-              <div className="text-2xl font-bold text-amber-600">{stats.totalIncidents}</div>
-              <div className="text-xs text-slate-600">Intsidenti</div>
-            </div>
-            <div className="space-y-1">
-              <div className="text-2xl font-bold text-red-600">{stats.totalTheftAmount.toFixed(0)}€</div>
-              <div className="text-xs text-slate-600">Varguste kahju</div>
+              <div className="text-2xl font-bold text-green-600">{stats.preventedTheftAmount.toFixed(0)}€</div>
+              <div className="text-xs text-slate-600">Ennetatud varguse summa</div>
             </div>
           </div>
-          {stats.preventedThefts > 0 && (
-            <div className="mt-3 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-300">
-              <div className="text-center">
-                <div className="text-xl font-bold text-green-800">
-                  {stats.preventedThefts} ennetatud vargust
-                </div>
-                <div className="text-lg font-semibold text-green-700">
-                  {stats.preventedTheftAmount.toFixed(0)}€
-                </div>
-                <div className="text-xs text-green-600 mt-1">
-                  Ennetatud varguse summa
-                </div>
-              </div>
-            </div>
-          )}
         </CardContent>
       </Card>
 
-      {/* Compact Summary - screen view only */}
+      {/* Personnel and Objects */}
       <Card className="card-hover no-print">
         <CardHeader>
           <CardTitle className="text-lg">Personal ja objektid</CardTitle>
@@ -270,31 +251,21 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardContent>
       </Card>
 
-      {/* Simplified Statistics for Print ONLY */}
-      <div className="print-only">
-        <div className="mb-4 p-4 border rounded">
-          <div className="grid grid-cols-5 gap-4 text-center text-sm">
+      {/* Print Statistics */}
+      <div className="print-only mb-4">
+        <div className="text-center text-sm space-y-2">
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <div className="font-bold text-blue-600">{stats.totalShifts}</div>
+              <div className="text-xs">Vahetust</div>
+            </div>
             <div>
               <div className="font-bold text-blue-600">{stats.totalHours.toFixed(1)}h</div>
               <div className="text-xs">Tundi kokku</div>
             </div>
             <div>
-              <div className="font-bold text-slate-700">{stats.objects.length}</div>
-              <div className="text-xs">Objekti</div>
-            </div>
-            <div>
-              <div className="font-bold text-slate-700">{stats.guards.length}</div>
-              <div className="text-xs">Turvameest</div>
-            </div>
-            <div>
               <div className="font-bold text-green-600">{stats.preventedTheftAmount.toFixed(0)}€</div>
-              <div className="text-xs">Ennetatud summa</div>
-            </div>
-            <div>
-              <div className="text-xs">
-                {format(startOfMonth(new Date(parseInt(year), parseInt(month) - 1)), 'dd.MM.yyyy')} - {format(endOfMonth(new Date(parseInt(year), parseInt(month) - 1)), 'dd.MM.yyyy')}
-              </div>
-              <div className="text-xs">Periood</div>
+              <div className="text-xs">Ennetatud varguse summa</div>
             </div>
           </div>
         </div>
