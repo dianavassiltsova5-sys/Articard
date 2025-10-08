@@ -262,147 +262,153 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         <CardContent>
           {monthlyShifts.length > 0 ? (
             <div data-testid="monthly-shifts-cards">
-              {/* Compact Shift Cards Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                {monthlyShifts.map((shift, index) => {
-                  const startTime = new Date(`2000-01-01T${shift.start_time}`);
-                  const endTime = new Date(`2000-01-01T${shift.end_time}`);
-                  let hoursWorked = (endTime - startTime) / (1000 * 60 * 60);
-                  if (hoursWorked < 0) hoursWorked += 24;
+              {/* Ultra Compact Shift Cards - 2 dates per card */}
+              <div className="space-y-4 mb-6">
+                {Array.from({ length: Math.ceil(monthlyShifts.length / 2) }, (_, pairIndex) => {
+                  const leftShift = monthlyShifts[pairIndex * 2];
+                  const rightShift = monthlyShifts[pairIndex * 2 + 1];
                   
-                  return (
-                    <div key={shift.id} className="bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition-shadow p-4">
-                      {/* Header with date and hours */}
-                      <div className="flex justify-between items-center mb-3">
-                        <div className="text-lg font-bold text-slate-800">
-                          {format(parseISO(shift.date), 'dd.MM')}
-                        </div>
-                        <div className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-medium">
-                          {hoursWorked.toFixed(1)}h
-                        </div>
-                      </div>
-                      
-                      {/* Time range */}
-                      <div className="flex items-center gap-2 mb-3 text-sm text-slate-600">
-                        <Clock className="h-4 w-4" />
-                        <span>{shift.start_time} - {shift.end_time}</span>
-                      </div>
-                      
-                      {/* Guard and Object */}
-                      <div className="space-y-2 mb-3">
-                        <div className="flex items-center gap-2 text-sm">
-                          <User className="h-4 w-4 text-emerald-600" />
-                          <span className="font-medium text-slate-700">{shift.guard_name}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <Building className="h-4 w-4 text-blue-600" />
-                          <span className="text-slate-600 truncate">{shift.object_name}</span>
-                        </div>
-                      </div>
-                      
-                      {/* Incidents */}
-                      {shift.incidents && shift.incidents.length > 0 ? (
-                        <div className="border-t pt-3 space-y-3">
-                          <div className="flex items-center gap-2 mb-3">
-                            <AlertTriangle className="h-4 w-4 text-amber-600" />
-                            <span className="text-sm font-medium text-slate-700">
-                              {shift.incidents.length} intsident{shift.incidents.length !== 1 ? 'i' : ''}
-                            </span>
+                  const getShiftHours = (shift) => {
+                    const startTime = new Date(`2000-01-01T${shift.start_time}`);
+                    const endTime = new Date(`2000-01-01T${shift.end_time}`);
+                    let hoursWorked = (endTime - startTime) / (1000 * 60 * 60);
+                    if (hoursWorked < 0) hoursWorked += 24;
+                    return hoursWorked;
+                  };
+
+                  const renderShift = (shift, side) => {
+                    if (!shift) return null;
+                    const hoursWorked = getShiftHours(shift);
+                    
+                    return (
+                      <div className={`${side === 'right' ? 'border-l pl-4' : 'pr-4'} flex-1`}>
+                        {/* Date and hours header */}
+                        <div className="flex justify-between items-center mb-2">
+                          <div className="text-lg font-bold text-slate-800">
+                            {format(parseISO(shift.date), 'dd.MM')}
                           </div>
-                          {shift.incidents.map((incident, idx) => (
-                            <div key={idx} className="bg-slate-50 rounded-lg p-3 space-y-2">
-                              {/* Incident header */}
-                              <div className="font-medium text-sm">
-                                {incident.incident_time && (
-                                  <span className="font-bold text-slate-700">Kell {incident.incident_time} - </span>
-                                )}
-                                <span className={incident.type === 'theft' ? 'text-red-600' : 'text-amber-600'}>
-                                  {formatIncidentType(incident.type)}
-                                </span>
-                                {incident.type === 'theft' && incident.theft_prevented && (
-                                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded ml-2 text-xs font-bold">ENNETATUD</span>
-                                )}
-                              </div>
-                              
-                              {/* Description */}
-                              <div className="text-sm text-slate-700 bg-white rounded p-2">
-                                <span className="font-medium">Kirjeldus:</span> {incident.description}
-                              </div>
-                              
-                              {/* Theft incident details */}
-                              {incident.type === 'theft' && (
-                                <div className="space-y-1 text-sm">
-                                  <div className="grid grid-cols-2 gap-2">
+                          <div className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">
+                            {hoursWorked.toFixed(1)}h
+                          </div>
+                        </div>
+                        
+                        {/* Time and personnel */}
+                        <div className="space-y-1 mb-3 text-xs">
+                          <div className="flex items-center gap-1">
+                            <Clock className="h-3 w-3 text-slate-500" />
+                            <span className="text-slate-600">{shift.start_time} - {shift.end_time}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <User className="h-3 w-3 text-emerald-600" />
+                            <span className="font-medium text-slate-700 text-xs">{shift.guard_name}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Building className="h-3 w-3 text-blue-600" />
+                            <span className="text-slate-600 text-xs truncate">{shift.object_name}</span>
+                          </div>
+                        </div>
+                        
+                        {/* Incidents */}
+                        {shift.incidents && shift.incidents.length > 0 ? (
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-1">
+                              <AlertTriangle className="h-3 w-3 text-amber-600" />
+                              <span className="text-xs font-medium text-slate-700">
+                                {shift.incidents.length} int.
+                              </span>
+                            </div>
+                            {shift.incidents.map((incident, idx) => (
+                              <div key={idx} className="bg-slate-50 rounded p-2 text-xs space-y-1">
+                                <div className="font-medium">
+                                  {incident.incident_time && (
+                                    <span className="font-bold text-slate-700">{incident.incident_time} - </span>
+                                  )}
+                                  <span className={incident.type === 'theft' ? 'text-red-600' : 'text-amber-600'}>
+                                    {formatIncidentType(incident.type)}
+                                  </span>
+                                  {incident.type === 'theft' && incident.theft_prevented && (
+                                    <span className="bg-green-100 text-green-700 px-1 rounded ml-1 text-xs">ENE</span>
+                                  )}
+                                </div>
+                                
+                                <div className="text-slate-600 text-xs bg-white rounded p-1">
+                                  <span className="font-medium">Kirj:</span> {incident.description.length > 40 ? `${incident.description.substring(0, 40)}...` : incident.description}
+                                </div>
+                                
+                                {incident.type === 'theft' && (
+                                  <div className="grid grid-cols-2 gap-1 text-xs">
                                     <div>
-                                      <span className="font-medium text-slate-600">Isik:</span> {formatGender(incident.gender)}
+                                      <span className="text-slate-500">Isik:</span> {formatGender(incident.gender)}
                                     </div>
                                     <div>
-                                      <span className="font-medium text-slate-600">
-                                        {incident.theft_prevented ? 'Ennetatud summa:' : 'Summa:'}
+                                      <span className="text-slate-500">
+                                        {incident.theft_prevented ? 'Enn:' : 'Sum:'}
                                       </span> 
                                       <span className={incident.theft_prevented ? 'text-green-600 font-bold ml-1' : 'text-red-600 font-bold ml-1'}>
                                         {incident.amount}€
                                       </span>
                                     </div>
-                                  </div>
-                                  
-                                  <div className="grid grid-cols-2 gap-2">
                                     <div>
-                                      <span className="font-medium text-slate-600">Erivahendid:</span> {incident.special_tools_used ? 'Jah' : 'Ei'}
+                                      <span className="text-slate-500">Eriv:</span> {incident.special_tools_used ? 'Jah' : 'Ei'}
                                     </div>
                                     <div>
-                                      <span className="font-medium text-slate-600">Tulemus:</span> 
+                                      <span className="text-slate-500">Tul:</span> 
                                       <span className={
                                         incident.outcome === 'politsei' ? 'text-red-600 font-bold ml-1' :
                                         (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold ml-1' : 'ml-1'
                                       }>
-                                        {formatOutcome(incident.outcome)}
+                                        {formatOutcome(incident.outcome).substring(0, 8)}
                                       </span>
                                     </div>
-                                  </div>
-                                  
-                                  <div className="grid grid-cols-2 gap-2">
                                     <div>
-                                      <span className="font-medium text-slate-600">G4S patrull:</span> 
+                                      <span className="text-slate-500">G4S:</span> 
                                       <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
                                         {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
                                       </span>
                                     </div>
                                     <div>
-                                      <span className="font-medium text-slate-600">Kiirabi:</span> 
+                                      <span className="text-slate-500">Kiir:</span> 
                                       <span className={incident.ambulance_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
                                         {incident.ambulance_called ? 'Jah' : 'Ei'}
                                       </span>
                                     </div>
                                   </div>
-                                </div>
-                              )}
-                              
-                              {/* General incident details */}
-                              {incident.type === 'general' && (
-                                <div className="grid grid-cols-2 gap-2 text-sm">
-                                  <div>
-                                    <span className="font-medium text-slate-600">G4S patrull:</span> 
-                                    <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
-                                      {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
-                                    </span>
+                                )}
+                                
+                                {incident.type === 'general' && (
+                                  <div className="grid grid-cols-2 gap-1 text-xs">
+                                    <div>
+                                      <span className="text-slate-500">G4S:</span> 
+                                      <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                                        {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
+                                      </span>
+                                    </div>
+                                    <div>
+                                      <span className="text-slate-500">Kiir:</span> 
+                                      <span className={incident.ambulance_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                                        {incident.ambulance_called ? 'Jah' : 'Ei'}
+                                      </span>
+                                    </div>
                                   </div>
-                                  <div>
-                                    <span className="font-medium text-slate-600">Kiirabi:</span> 
-                                    <span className={incident.ambulance_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
-                                      {incident.ambulance_called ? 'Jah' : 'Ei'}
-                                    </span>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="border-t pt-3 text-sm text-slate-400 text-center">
-                          Intsidendid puuduvad
-                        </div>
-                      )}
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="text-xs text-slate-400 text-center py-2">
+                            Ei ole intsidenti
+                          </div>
+                        )}
+                      </div>
+                    );
+                  };
+
+                  return (
+                    <div key={pairIndex} className="bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition-shadow p-4">
+                      <div className="flex">
+                        {renderShift(leftShift, 'left')}
+                        {rightShift && renderShift(rightShift, 'right')}
+                      </div>
                     </div>
                   );
                 })}
