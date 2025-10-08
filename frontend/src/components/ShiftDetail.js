@@ -492,7 +492,7 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
               {shift.incidents.map((incident, index) => (
                 <div 
                   key={index} 
-                  className={`rounded-lg border-2 p-5 shadow-sm ${
+                  className={`rounded-lg border-2 p-5 shadow-sm break-inside-avoid page-break-inside-avoid ${
                     index % 4 === 0 ? 'bg-red-50 border-red-300 border-l-8 border-l-red-500' :
                     index % 4 === 1 ? 'bg-amber-50 border-amber-300 border-l-8 border-l-amber-500' :
                     index % 4 === 2 ? 'bg-emerald-50 border-emerald-300 border-l-8 border-l-emerald-500' :
