@@ -389,8 +389,71 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                           </span>
                         </td>
                         <td className="p-3 text-sm leading-relaxed align-top">
-                          <div className="whitespace-pre-line" style={{ lineHeight: '1.6' }}>
-                            {remarksContent}
+                          <div className="space-y-2">
+                            {shift.incidents && shift.incidents.length > 0 ? (
+                              shift.incidents.map((incident, idx) => {
+                                const lines = [];
+                                
+                                // Main incident line
+                                let mainLine = `${idx + 1}. `;
+                                if (incident.incident_time) {
+                                  mainLine += `Kell ${incident.incident_time} - `;
+                                } else if (incident.timestamp) {
+                                  mainLine += `Kell ${format(parseISO(incident.timestamp), 'HH:mm')} - `;
+                                }
+                                mainLine += `${formatIncidentType(incident.type)}`;
+                                
+                                if (incident.type === 'theft' && incident.theft_prevented) {
+                                  mainLine += ` (ENNETATUD)`;
+                                }
+                                
+                                return (
+                                  <div key={idx} className="mb-3">
+                                    <div className="font-medium">{mainLine}</div>
+                                    <div className="ml-3 space-y-1 text-sm">
+                                      <div>Kirjeldus: {incident.description}</div>
+                                      
+                                      {incident.type === 'theft' && (
+                                        <div className="flex flex-wrap gap-4 text-xs">
+                                          <span>Isik: {formatGender(incident.gender)}</span>
+                                          <span className="text-red-600 font-bold">
+                                            {incident.theft_prevented ? 'Ennetatud summa' : 'Summa'}: {incident.amount}€
+                                          </span>
+                                          <span>Erivahendid: {incident.special_tools_used ? 'Jah' : 'Ei'}</span>
+                                          <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold' : ''}>
+                                            G4S patrull: {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
+                                          </span>
+                                          <span className={incident.ambulance_called ? 'text-red-600 font-bold' : ''}>
+                                            Kiirabi: {incident.ambulance_called ? 'Jah' : 'Ei'}
+                                          </span>
+                                          {!incident.theft_prevented && (
+                                            <span className={
+                                              incident.outcome === 'politsei' ? 'text-red-600 font-bold' :
+                                              (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold' : ''
+                                            }>
+                                              Tulemus: {formatOutcome(incident.outcome)}
+                                            </span>
+                                          )}
+                                        </div>
+                                      )}
+                                      
+                                      {incident.type === 'general' && (
+                                        <div className="flex flex-wrap gap-4 text-xs">
+                                          <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold' : ''}>
+                                            G4S patrull: {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
+                                          </span>
+                                          <span className={incident.ambulance_called ? 'text-red-600 font-bold' : ''}>
+                                            Kiirabi: {incident.ambulance_called ? 'Jah' : 'Ei'}
+                                          </span>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })
+                            ) : (
+                              <div className="text-slate-500">Intsidendid puuduvad</div>
+                            )}
                           </div>
                         </td>
                       </tr>
