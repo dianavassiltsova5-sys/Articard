@@ -420,7 +420,7 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                                       {incident.type === 'theft' && (
                                         <div className="flex flex-wrap gap-4 text-xs">
                                           <span>Isik: {formatGender(incident.gender)}</span>
-                                          <span className="text-red-600 font-bold">
+                                          <span className={incident.theft_prevented ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
                                             {incident.theft_prevented ? 'Ennetatud summa' : 'Summa'}: {incident.amount}€
                                           </span>
                                           <span>Erivahendid: {incident.special_tools_used ? 'Jah' : 'Ei'}</span>
