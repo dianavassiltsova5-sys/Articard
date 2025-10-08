@@ -302,6 +302,74 @@ const ShiftForm = ({ onSubmit, onCancel, initialData }) => {
               </div>
             </div>
 
+            {/* Save as Template */}
+            <div className="border-t pt-4">
+              <Dialog open={showSaveTemplate} onOpenChange={setShowSaveTemplate}>
+                <DialogTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full"
+                    disabled={!formData.object_name.trim() || !formData.guard_name.trim()}
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    Salvesta mallina
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Salvesta mall</DialogTitle>
+                    <DialogDescription>
+                      Anna mallile nimi, et seda hiljem kiiresti kasutada
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="template-name">Malli nimi</Label>
+                      <Input
+                        id="template-name"
+                        placeholder="nt. Mall 1, Öövahetus"
+                        value={templateName}
+                        onChange={(e) => setTemplateName(e.target.value)}
+                      />
+                    </div>
+                    <div className="text-sm text-gray-600 space-y-1">
+                      <div><strong>Objekt:</strong> {formData.object_name || 'Määramata'}</div>
+                      <div><strong>Turvamees:</strong> {formData.guard_name || 'Määramata'}</div>
+                      {formData.start_time && <div><strong>Algusaeg:</strong> {formData.start_time}</div>}
+                      {formData.end_time && <div><strong>Lõpuaeg:</strong> {formData.end_time}</div>}
+                    </div>
+                    <div className="flex gap-2 pt-4">
+                      <Button 
+                        onClick={handleSaveTemplate}
+                        className="flex-1"
+                        disabled={isSavingTemplate}
+                      >
+                        {isSavingTemplate ? (
+                          <>
+                            <div className="spinner mr-2" />
+                            Salvestamine...
+                          </>
+                        ) : (
+                          'Salvesta mall'
+                        )}
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        onClick={() => {
+                          setShowSaveTemplate(false);
+                          setTemplateName('');
+                        }}
+                        className="flex-1"
+                      >
+                        Tühista
+                      </Button>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
+
             {/* Form Actions */}
             <div className="flex gap-4 pt-4">
               <Button 
