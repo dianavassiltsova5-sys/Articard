@@ -216,6 +216,12 @@ metadata:
 
 test_plan:
   current_focus: []
+  completed_tasks:
+    - "Template system implementation (backend + frontend)"
+    - "Visual improvements - color coding for incidents"  
+    - "Mobile UI fixes for incident dialog scrolling"
+    - "Incident time display improvements"
+    - "Text updates from 'varguste kahju' to 'ennetatud varguse summa'"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
