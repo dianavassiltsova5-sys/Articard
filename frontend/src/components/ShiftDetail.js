@@ -498,9 +498,9 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                       >
                         {formatIncidentType(incident.type)}
                       </Badge>
-                      {incident.timestamp && (
+                      {(incident.incident_time || incident.timestamp) && (
                         <span className="text-xs text-slate-500">
-                          {format(parseISO(incident.timestamp), 'HH:mm')}
+                          {incident.incident_time || format(parseISO(incident.timestamp), 'HH:mm')}
                         </span>
                       )}
                     </div>
