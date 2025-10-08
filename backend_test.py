@@ -18,6 +18,7 @@ class ArticardAPITester:
         self.tests_passed = 0
         self.test_results = []
         self.created_shift_id = None
+        self.created_template_id = None
 
     def log_test(self, name: str, success: bool, details: str = ""):
         """Log test result"""
