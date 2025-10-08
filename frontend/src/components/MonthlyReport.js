@@ -251,20 +251,20 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardContent>
       </Card>
 
-      {/* Print Statistics */}
+      {/* Print Statistics - only for print */}
       <div className="print-only mb-4">
-        <div className="text-center text-sm space-y-2">
+        <div className="text-center text-sm">
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <div className="font-bold text-blue-600">{stats.totalShifts}</div>
+              <div className="font-bold">{stats.totalShifts}</div>
               <div className="text-xs">Vahetust</div>
             </div>
             <div>
-              <div className="font-bold text-blue-600">{stats.totalHours.toFixed(1)}h</div>
+              <div className="font-bold">{stats.totalHours.toFixed(1)}h</div>
               <div className="text-xs">Tundi kokku</div>
             </div>
             <div>
-              <div className="font-bold text-green-600">{stats.preventedTheftAmount.toFixed(0)}€</div>
+              <div className="font-bold">{stats.preventedTheftAmount.toFixed(0)}€</div>
               <div className="text-xs">Ennetatud varguse summa</div>
             </div>
           </div>
