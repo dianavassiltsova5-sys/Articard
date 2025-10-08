@@ -54,10 +54,31 @@ const Dashboard = ({ shifts, loading, onCreateShift, onDeleteShift }) => {
       stats.totalHours += hoursWorked;
       stats.totalShifts += 1;
       stats.totalIncidents += shift.incidents ? shift.incidents.length : 0;
+      
+      // Calculate theft incidents and amounts
+      if (shift.incidents) {
+        shift.incidents.forEach(incident => {
+          if (incident.type === 'theft') {
+            if (incident.theft_prevented) {
+              stats.preventedTheftAmount += parseFloat(incident.amount) || 0;
+              stats.preventedThefts += 1;
+            } else {
+              stats.totalTheftAmount += parseFloat(incident.amount) || 0;
+            }
+          }
+        });
+      }
     });
     
     return stats;
-  }, { totalHours: 0, totalShifts: 0, totalIncidents: 0 });
+  }, { 
+    totalHours: 0, 
+    totalShifts: 0, 
+    totalIncidents: 0,
+    totalTheftAmount: 0,
+    preventedTheftAmount: 0,
+    preventedThefts: 0
+  });
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
