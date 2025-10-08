@@ -216,13 +216,16 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
             </div>
           </div>
           {stats.preventedThefts > 0 && (
-            <div className="mt-3 p-3 bg-green-50 rounded-lg border border-green-200">
+            <div className="mt-3 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-300">
               <div className="text-center">
-                <div className="text-lg font-bold text-green-700">
+                <div className="text-xl font-bold text-green-800">
                   {stats.preventedThefts} ennetatud vargust
                 </div>
-                <div className="text-sm text-green-600">
-                  Ennetatud varguse summa: {stats.preventedTheftAmount.toFixed(0)}€
+                <div className="text-lg font-semibold text-green-700">
+                  {stats.preventedTheftAmount.toFixed(0)}€
+                </div>
+                <div className="text-xs text-green-600 mt-1">
+                  Ennetatud varguse summa
                 </div>
               </div>
             </div>
