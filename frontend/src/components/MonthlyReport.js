@@ -323,7 +323,11 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                                   <span className="bg-green-100 text-green-800 px-2 py-1 rounded ml-2 text-xs font-bold">ENNETATUD</span>
                                 )}
                               </div>
-                              <div className="text-slate-600 mb-1 truncate">{incident.description}</div>
+                              
+                              {/* Description */}
+                              <div className="text-sm text-slate-700 bg-white rounded p-2">
+                                <span className="font-medium">Kirjeldus:</span> {incident.description}
+                              </div>
                               
                               {incident.type === 'theft' && (
                                 <div className="flex flex-wrap gap-2 text-xs">
