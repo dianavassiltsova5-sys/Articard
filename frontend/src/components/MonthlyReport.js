@@ -222,7 +222,7 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                   {stats.preventedThefts} ennetatud vargust
                 </div>
                 <div className="text-sm text-green-600">
-                  Ennetatud kahju: {stats.preventedTheftAmount.toFixed(0)}€
+                  Ennetatud varguse summa: {stats.preventedTheftAmount.toFixed(0)}€
                 </div>
               </div>
             </div>
