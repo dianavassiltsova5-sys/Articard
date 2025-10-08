@@ -533,17 +533,17 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                   )}
 
                   {/* Additional services info for all incident types */}
-                  {(incident.g4s_patrol_called || incident.ambulance_called) && (
+                  {(incident.g4s_patrol_called === true || incident.ambulance_called === true) && (
                     <div className="border-t pt-2 mt-2">
                       <div className="text-xs text-slate-600">
                         <span className="font-medium">Täiendavad teenused:</span>
                         <div className="flex flex-wrap gap-2 mt-1">
-                          {incident.g4s_patrol_called && (
+                          {incident.g4s_patrol_called === true && (
                             <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700">
                               G4S patrull
                             </Badge>
                           )}
-                          {incident.ambulance_called && (
+                          {incident.ambulance_called === true && (
                             <Badge variant="outline" className="text-xs bg-red-50 text-red-700">
                               Kiirabi
                             </Badge>
