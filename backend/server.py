@@ -388,6 +388,25 @@ async def delete_template(template_id: str):
     
     return {"message": "Template deleted successfully"}
 
+# Authentication middleware
+@app.middleware("http")
+async def auth_middleware(request: Request, call_next):
+    """Check authentication for all API routes except auth endpoints"""
+    path = request.url.path
+    
+    # Allow access to auth endpoints and root
+    if path in ["/api/", "/api/auth/login", "/api/auth/check"] or not path.startswith("/api/"):
+        response = await call_next(request)
+        return response
+    
+    # Check if IP is authenticated
+    client_ip = get_client_ip(request)
+    if not is_ip_authenticated(client_ip):
+        raise HTTPException(status_code=401, detail="Authentication required")
+    
+    response = await call_next(request)
+    return response
+
 # Include the router in the main app
 app.include_router(api_router)
 
