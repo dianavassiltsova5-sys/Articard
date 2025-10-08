@@ -230,6 +230,89 @@ body {
     color: #6b7280 !important;
     margin: 0 !important;
   }
+
+  /* Colorful incident blocks for print */
+  .bg-red-50 {
+    background-color: #fef2f2 !important;
+  }
+  
+  .bg-amber-50 {
+    background-color: #fffbeb !important;
+  }
+  
+  .bg-emerald-50 {
+    background-color: #ecfdf5 !important;
+  }
+  
+  .bg-purple-50 {
+    background-color: #faf5ff !important;
+  }
+  
+  .border-l-red-500 {
+    border-left: 4px solid #ef4444 !important;
+  }
+  
+  .border-l-amber-500 {
+    border-left: 4px solid #f59e0b !important;
+  }
+  
+  .border-l-emerald-500 {
+    border-left: 4px solid #10b981 !important;
+  }
+  
+  .border-l-purple-500 {
+    border-left: 4px solid #8b5cf6 !important;
+  }
+  
+  .border-red-300 {
+    border-color: #fca5a5 !important;
+  }
+  
+  .border-amber-300 {
+    border-color: #fcd34d !important;
+  }
+  
+  .border-emerald-300 {
+    border-color: #6ee7b7 !important;
+  }
+  
+  .border-purple-300 {
+    border-color: #c4b5fd !important;
+  }
+  
+  /* Text colors for incident headers */
+  .text-red-800 {
+    color: #991b1b !important;
+  }
+  
+  .text-amber-800 {
+    color: #92400e !important;
+  }
+  
+  .text-emerald-800 {
+    color: #065f46 !important;
+  }
+  
+  .text-purple-800 {
+    color: #581c87 !important;
+  }
+  
+  /* Background colors for icons */
+  .bg-red-200 {
+    background-color: #fecaca !important;
+  }
+  
+  .bg-amber-200 {
+    background-color: #fde68a !important;
+  }
+  
+  .bg-emerald-200 {
+    background-color: #a7f3d0 !important;
+  }
+  
+  .bg-purple-200 {
+    background-color: #ddd6fe !important;
+  }
 }
 
 /* Custom scrollbar */
