@@ -182,10 +182,7 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "Visual improvements - color coding for incidents"
-    - "Remove circle icons from monthly report"
-    - "Update text from 'varguste kahju' to 'ennetatud varguse summa'"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
