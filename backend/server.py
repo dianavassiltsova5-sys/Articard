@@ -270,6 +270,61 @@ async def get_shifts_by_month(year: int, month: int):
     parsed_shifts = [parse_from_mongo(shift) for shift in shifts]
     return [WorkShift(**shift) for shift in parsed_shifts]
 
+# Template CRUD operations
+@api_router.post("/templates", response_model=Template)
+async def create_template(template_data: TemplateCreate):
+    template = Template(**template_data.dict())
+    template_dict = prepare_for_mongo(template.dict())
+    
+    result = await db.templates.insert_one(template_dict)
+    if not result.inserted_id:
+        raise HTTPException(status_code=400, detail="Failed to create template")
+    
+    return template
+
+@api_router.get("/templates", response_model=List[Template])
+async def get_templates():
+    templates = await db.templates.find().to_list(100)
+    parsed_templates = [parse_from_mongo(template) for template in templates]
+    return [Template(**template) for template in parsed_templates]
+
+@api_router.get("/templates/{template_id}", response_model=Template)
+async def get_template(template_id: str):
+    template = await db.templates.find_one({"id": template_id})
+    if not template:
+        raise HTTPException(status_code=404, detail="Template not found")
+    
+    parsed_template = parse_from_mongo(template)
+    return Template(**parsed_template)
+
+@api_router.put("/templates/{template_id}", response_model=Template)
+async def update_template(template_id: str, template_data: TemplateUpdate):
+    template = await db.templates.find_one({"id": template_id})
+    if not template:
+        raise HTTPException(status_code=404, detail="Template not found")
+    
+    update_data = {k: v for k, v in template_data.dict().items() if v is not None}
+    update_data["updated_at"] = datetime.now(timezone.utc)
+    
+    prepared_data = prepare_for_mongo(update_data)
+    await db.templates.update_one({"id": template_id}, {"$set": prepared_data})
+    
+    updated_template = await db.templates.find_one({"id": template_id})
+    parsed_template = parse_from_mongo(updated_template)
+    return Template(**parsed_template)
+
+@api_router.delete("/templates/{template_id}")
+async def delete_template(template_id: str):
+    template = await db.templates.find_one({"id": template_id})
+    if not template:
+        raise HTTPException(status_code=404, detail="Template not found")
+    
+    result = await db.templates.delete_one({"id": template_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Template not found")
+    
+    return {"message": "Template deleted successfully"}
+
 # Include the router in the main app
 app.include_router(api_router)
 
