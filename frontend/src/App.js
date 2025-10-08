@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard';
 import ShiftForm from './components/ShiftForm';
 import ShiftDetail from './components/ShiftDetail';
 import MonthlyReport from './components/MonthlyReport';
+import Login from './components/Login';
 import { Toaster } from './components/ui/sonner';
 import './App.css';
 
