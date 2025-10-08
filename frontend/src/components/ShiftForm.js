@@ -212,6 +212,30 @@ const ShiftForm = ({ onSubmit, onCancel, initialData }) => {
               </Popover>
             </div>
 
+            {/* Templates Section */}
+            {templates.length > 0 && (
+              <div className="space-y-2 border rounded-lg p-4 bg-blue-50">
+                <Label className="flex items-center gap-2">
+                  <Bookmark className="h-4 w-4 text-blue-600" />
+                  Mallid
+                </Label>
+                <div className="flex flex-wrap gap-2">
+                  {templates.map((template) => (
+                    <Button
+                      key={template.id}
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => loadTemplate(template)}
+                      className="text-sm"
+                    >
+                      {template.name}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Object Name */}
             <div className="space-y-2">
               <Label htmlFor="object_name" className="flex items-center gap-2">
