@@ -520,10 +520,16 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                   {incident.type === 'general' && (
                     <div className="grid grid-cols-2 gap-4 text-xs text-slate-600 mb-3">
                       <div>
-                        <span className="font-medium">G4S patrull:</span> {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
+                        <span className="font-medium">G4S patrull:</span> 
+                        <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                          {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
+                        </span>
                       </div>
                       <div>
-                        <span className="font-medium">Kiirabi:</span> {incident.ambulance_called ? 'Jah' : 'Ei'}
+                        <span className="font-medium">Kiirabi:</span> 
+                        <span className={incident.ambulance_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                          {incident.ambulance_called ? 'Jah' : 'Ei'}
+                        </span>
                       </div>
                     </div>
                   )}
