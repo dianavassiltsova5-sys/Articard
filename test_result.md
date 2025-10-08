@@ -127,11 +127,14 @@ frontend:
     file: "frontend/src/components/MonthlyReport.js, frontend/src/components/ShiftDetail.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: true
           agent: "main"
           comment: "Color-coding implemented for summa (red), tulemus (green/red), G4S and ambulance (red if called)"
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED SUCCESSFULLY: Color coding working perfectly. Found 4 red colored amounts (€), 2 G4S entries in red when called, 1 ambulance entry in red when called, and 1 green colored outcome for 'Maksis ja vabastatud'. All color coding requirements met in both shift detail and monthly report views."
 
   - task: "Remove circle icons from monthly report"
     implemented: true
@@ -139,11 +142,14 @@ frontend:
     file: "frontend/src/components/MonthlyReport.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: true
           agent: "main"
           comment: "No circle icons found in current implementation - task appears completed"
+        - working: true
+          agent: "testing"
+          comment: "✅ CONFIRMED: No circle icons found in monthly report. Task completed successfully."
 
   - task: "Update text from 'varguste kahju' to 'ennetatud varguse summa'"
     implemented: true
@@ -159,6 +165,9 @@ frontend:
         - working: true
           agent: "main"
           comment: "Fixed remaining 'Varguse kahju' text in monthly report statistics card (line 215) - changed to 'Ennetatud varguse summa' to match user requirements"
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED SUCCESSFULLY: Found 'Ennetatud varguse summa' text 4 times in monthly report. Old 'varguste kahju' text found 0 times. Text update completed successfully throughout the application."
 
   - task: "Template system UI for shift creation"
     implemented: true
@@ -174,6 +183,30 @@ frontend:
         - working: true
           agent: "testing"
           comment: "Template system UI fully implemented and tested successfully. All core functionality working: 1) Template creation flow - 'Salvesta mallina' button enables when fields filled, opens dialog with preview, saves template with success message. 2) Template loading flow - Templates section appears with saved templates, clicking template button loads data into form fields with success message. 3) Template persistence - Templates persist after page refresh and across navigation. 4) Error handling - Proper validation for empty template names and disabled save button for empty fields. 5) Multiple templates support - Can create and manage multiple templates. Minor issue: Time fields show seconds (03:15:00) instead of just hours:minutes (03:15) when loaded from template, but this doesn't affect functionality. Backend integration working perfectly with MongoDB persistence."
+
+  - task: "Mobile UI fixes for incident dialog scrolling"
+    implemented: true
+    working: true
+    file: "frontend/src/components/ShiftDetail.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED SUCCESSFULLY: Mobile UI (375x667 viewport) works perfectly. Incident dialog opens correctly, switches to 'Vargus' (theft) type showing long dialog with all fields. Dialog scrolls properly to show 'Lisa intsident' button. All form fields accessible and functional including incident time, theft amount, special tools, outcome selection, and additional services (G4S/ambulance). Successfully saved incident with all data."
+
+  - task: "Incident time display improvements"
+    implemented: true
+    working: true
+    file: "frontend/src/components/ShiftDetail.js, frontend/src/components/MonthlyReport.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED SUCCESSFULLY: Incident time display working correctly. User-entered time (15:45) displays in bold font (font-weight: 700) in shift details. No automatic timestamps shown (found 0 timestamp patterns). Monthly report table shows 'Kell 15:45' format correctly. Only user-entered incident_time is displayed, not creation timestamps."
 
 metadata:
   created_by: "main_agent"
