@@ -194,8 +194,8 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardHeader>
       </Card>
 
-      {/* Compact Monthly Statistics */}
-      <Card className="card-hover">
+      {/* Compact Monthly Statistics - hidden in print */}
+      <Card className="card-hover no-print">
         <CardContent className="p-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div className="space-y-1">
