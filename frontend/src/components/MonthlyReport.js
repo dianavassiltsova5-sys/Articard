@@ -476,6 +476,9 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                         {stats.preventedThefts > 0 && (
                           <div>Ennetatud varguse summa: <span className="font-bold text-green-600">{stats.preventedTheftAmount.toFixed(0)}€</span></div>
                         )}
+                        {stats.totalTheftAmount === 0 && stats.preventedThefts > 0 && (
+                          <div>Ennetatud varguse summa: <span className="font-bold text-green-600">{stats.preventedTheftAmount.toFixed(0)}€</span></div>
+                        )}
                       </div>
                     </td>
                   </tr>
