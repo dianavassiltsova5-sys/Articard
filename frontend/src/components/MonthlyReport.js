@@ -405,7 +405,13 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                                 
                                 return (
                                   <div key={idx} className="mb-3">
-                                    <div className="font-medium">{mainLine}</div>
+                                    <div className="font-medium">
+                                      {incident.incident_time && (
+                                        <span className="font-bold">Kell {incident.incident_time} - </span>
+                                      )}
+                                      {`${idx + 1}. ${formatIncidentType(incident.type)}`}
+                                      {incident.type === 'theft' && incident.theft_prevented && ' (ENNETATUD)'}
+                                    </div>
                                     <div className="ml-3 space-y-1 text-sm">
                                       <div>Kirjeldus: {incident.description}</div>
                                       
