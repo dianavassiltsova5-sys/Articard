@@ -329,23 +329,52 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                                 <span className="font-medium">Kirjeldus:</span> {incident.description}
                               </div>
                               
+                              {/* Theft incident details */}
                               {incident.type === 'theft' && (
-                                <div className="flex flex-wrap gap-2 text-xs">
-                                  <span className={incident.theft_prevented ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
-                                    {incident.amount}€
-                                  </span>
-                                  {incident.g4s_patrol_called && (
-                                    <span className="bg-red-100 text-red-700 px-1 rounded">G4S</span>
-                                  )}
-                                  {incident.ambulance_called && (
-                                    <span className="bg-red-100 text-red-700 px-1 rounded">Kiirabi</span>
-                                  )}
-                                  <span className={
-                                    incident.outcome === 'politsei' ? 'text-red-600 font-bold' :
-                                    (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold' : ''
-                                  }>
-                                    {formatOutcome(incident.outcome)}
-                                  </span>
+                                <div className="space-y-1 text-sm">
+                                  <div className="grid grid-cols-2 gap-2">
+                                    <div>
+                                      <span className="font-medium text-slate-600">Isik:</span> {formatGender(incident.gender)}
+                                    </div>
+                                    <div>
+                                      <span className="font-medium text-slate-600">
+                                        {incident.theft_prevented ? 'Ennetatud summa:' : 'Summa:'}
+                                      </span> 
+                                      <span className={incident.theft_prevented ? 'text-green-600 font-bold ml-1' : 'text-red-600 font-bold ml-1'}>
+                                        {incident.amount}€
+                                      </span>
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="grid grid-cols-2 gap-2">
+                                    <div>
+                                      <span className="font-medium text-slate-600">Erivahendid:</span> {incident.special_tools_used ? 'Jah' : 'Ei'}
+                                    </div>
+                                    <div>
+                                      <span className="font-medium text-slate-600">Tulemus:</span> 
+                                      <span className={
+                                        incident.outcome === 'politsei' ? 'text-red-600 font-bold ml-1' :
+                                        (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold ml-1' : 'ml-1'
+                                      }>
+                                        {formatOutcome(incident.outcome)}
+                                      </span>
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="grid grid-cols-2 gap-2">
+                                    <div>
+                                      <span className="font-medium text-slate-600">G4S patrull:</span> 
+                                      <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                                        {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
+                                      </span>
+                                    </div>
+                                    <div>
+                                      <span className="font-medium text-slate-600">Kiirabi:</span> 
+                                      <span className={incident.ambulance_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                                        {incident.ambulance_called ? 'Jah' : 'Ei'}
+                                      </span>
+                                    </div>
+                                  </div>
                                 </div>
                               )}
                               
