@@ -426,14 +426,12 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                                           <span className={incident.ambulance_called ? 'text-red-600 font-bold' : ''}>
                                             Kiirabi: {incident.ambulance_called ? 'Jah' : 'Ei'}
                                           </span>
-                                          {!incident.theft_prevented && (
-                                            <span className={
-                                              incident.outcome === 'politsei' ? 'text-red-600 font-bold' :
-                                              (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold' : ''
-                                            }>
-                                              Tulemus: {formatOutcome(incident.outcome)}
-                                            </span>
-                                          )}
+                                          <span className={
+                                            incident.outcome === 'politsei' ? 'text-red-600 font-bold' :
+                                            (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold' : ''
+                                          }>
+                                            Tulemus: {formatOutcome(incident.outcome)}
+                                          </span>
                                         </div>
                                       )}
                                       
