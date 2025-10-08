@@ -8,7 +8,7 @@ import { Calendar } from './ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
-import { CalendarIcon, Clock, User, Building, Calendar, Save, Bookmark, Plus } from 'lucide-react';
+import { CalendarIcon, Clock, User, Building, Save, Bookmark, Plus } from 'lucide-react';
 import { format } from 'date-fns';
 import { et } from 'date-fns/locale';
 import { toast } from 'sonner';
