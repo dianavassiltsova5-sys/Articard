@@ -310,7 +310,7 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                             </span>
                           </div>
                           {shift.incidents.map((incident, idx) => (
-                            <div key={idx} className="text-xs bg-slate-50 rounded p-2">
+                            <div key={idx} className="bg-slate-50 rounded-lg p-3 space-y-2">
                               <div className="font-medium mb-1">
                                 {incident.incident_time && (
                                   <span className="font-bold text-slate-600">{incident.incident_time} - </span>
