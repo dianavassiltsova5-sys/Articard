@@ -52,7 +52,8 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
       outcome: 'vabastatud',
       g4s_patrol_called: false,
       ambulance_called: false,
-      theft_prevented: false
+      theft_prevented: false,
+      incident_time: ''
     });
     setIncidentType('general');
   };
