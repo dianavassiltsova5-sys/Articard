@@ -129,6 +129,23 @@ function App() {
     }
   }, [isAuthenticated]);
 
+  // Show loading while checking auth
+  if (authChecking) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="spinner mb-4"></div>
+          <p className="text-slate-600">Kontrollimine...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login if not authenticated
+  if (!isAuthenticated) {
+    return <Login onAuthSuccess={handleAuthSuccess} />;
+  }
+
   return (
     <div className="App min-h-screen bg-gradient-to-br from-gray-50 to-slate-100">
       <BrowserRouter>
