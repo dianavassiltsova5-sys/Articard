@@ -177,7 +177,6 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Template system API endpoints"
     - "Template system UI for shift creation"
   stuck_tasks: []
   test_all: false
