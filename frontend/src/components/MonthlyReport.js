@@ -211,8 +211,8 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
               <div className="text-xs text-slate-600">Intsidenti</div>
             </div>
             <div className="space-y-1">
-              <div className="text-2xl font-bold text-red-600">{stats.totalTheftAmount.toFixed(0)}€</div>
-              <div className="text-xs text-slate-600">Varguste kahju</div>
+              <div className="text-2xl font-bold text-green-600">{stats.preventedTheftAmount.toFixed(0)}€</div>
+              <div className="text-xs text-slate-600">Ennetatud varguse summa</div>
             </div>
           </div>
           {stats.preventedThefts > 0 && (
