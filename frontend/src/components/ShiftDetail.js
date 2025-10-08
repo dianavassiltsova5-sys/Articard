@@ -542,20 +542,33 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
                           <span className="font-medium">Sugu:</span> {formatGender(incident.gender)}
                         </div>
                         <div>
-                          <span className="font-medium">{incident.theft_prevented ? 'Ennetatud summa' : 'Summa'}:</span> {incident.amount}€
+                          <span className="font-medium">{incident.theft_prevented ? 'Ennetatud summa' : 'Summa'}:</span> 
+                          <span className="text-red-600 font-bold ml-1">{incident.amount}€</span>
                         </div>
                         <div>
                           <span className="font-medium">Erivahendid:</span> {incident.special_tools_used ? 'Jah' : 'Ei'}
                         </div>
                         <div>
-                          <span className="font-medium">G4S patrull:</span> {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
+                          <span className="font-medium">G4S patrull:</span> 
+                          <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                            {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
+                          </span>
                         </div>
                         <div>
-                          <span className="font-medium">Kiirabi:</span> {incident.ambulance_called ? 'Jah' : 'Ei'}
+                          <span className="font-medium">Kiirabi:</span> 
+                          <span className={incident.ambulance_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                            {incident.ambulance_called ? 'Jah' : 'Ei'}
+                          </span>
                         </div>
                         {!incident.theft_prevented && (
                           <div>
-                            <span className="font-medium">Tulemus:</span> {formatOutcome(incident.outcome)}
+                            <span className="font-medium">Tulemus:</span> 
+                            <span className={
+                              incident.outcome === 'politsei' ? 'text-red-600 font-bold ml-1' :
+                              (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold ml-1' : 'ml-1'
+                            }>
+                              {formatOutcome(incident.outcome)}
+                            </span>
                           </div>
                         )}
                       </div>
