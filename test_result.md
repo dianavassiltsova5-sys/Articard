@@ -225,6 +225,8 @@ test_plan:
     - "Tulemus display for prevented thefts fixed"
     - "Duplicate text removal in monthly report"
     - "Statistics visual improvements"
+    - "Monthly report simplification - removed varguste kahju everywhere"
+    - "Simplified report header and footer per user requirements"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
