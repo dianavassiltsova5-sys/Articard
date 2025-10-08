@@ -120,8 +120,14 @@ function App() {
   };
 
   useEffect(() => {
-    fetchShifts();
+    checkAuthentication();
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchShifts();
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className="App min-h-screen bg-gradient-to-br from-gray-50 to-slate-100">
