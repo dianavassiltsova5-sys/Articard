@@ -231,7 +231,27 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardContent>
       </Card>
 
-      {/* Print Statistics - only for print */}
+      {/* Enhanced Statistics Before Table */}
+      <div className="mb-6">
+        <div className="bg-gradient-to-r from-slate-50 to-blue-50 rounded-lg p-6 border border-slate-200">
+          <div className="grid grid-cols-3 gap-6 text-center">
+            <div className="p-4 bg-white rounded-lg shadow-sm border">
+              <div className="text-2xl font-bold text-emerald-600 mb-1">{stats.totalShifts}</div>
+              <div className="text-sm font-medium text-slate-600">Vahetust</div>
+            </div>
+            <div className="p-4 bg-white rounded-lg shadow-sm border">
+              <div className="text-2xl font-bold text-blue-600 mb-1">{stats.totalHours.toFixed(1)}h</div>
+              <div className="text-sm font-medium text-slate-600">Tundi kokku</div>
+            </div>
+            <div className="p-4 bg-white rounded-lg shadow-sm border">
+              <div className="text-2xl font-bold text-green-600 mb-1">{stats.preventedTheftAmount.toFixed(0)}€</div>
+              <div className="text-sm font-medium text-slate-600">Ennetatud varguse summa</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Print Statistics - simplified for print only */}
       <div className="print-only mb-4">
         <div className="text-center text-sm">
           <div className="grid grid-cols-3 gap-4">
