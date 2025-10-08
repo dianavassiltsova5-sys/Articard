@@ -404,7 +404,7 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                   };
 
                   return (
-                    <div key={pairIndex} className="bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition-shadow p-4">
+                    <div key={pairIndex} className="bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 break-inside-avoid page-break-inside-avoid">
                       <div className="flex">
                         {renderShift(leftShift, 'left')}
                         {rightShift && renderShift(rightShift, 'right')}
