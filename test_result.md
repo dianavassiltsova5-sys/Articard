@@ -101,3 +101,85 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: Complete visual improvements for incident display (color-coding, text changes) and implement template system for shift reports to pre-fill object and guard details for faster report creation.
+
+backend:
+  - task: "Template system API endpoints"
+    implemented: false
+    working: "NA"
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Not implemented yet - need to create CRUD endpoints for templates"
+
+frontend:
+  - task: "Visual improvements - color coding for incidents"
+    implemented: true
+    working: true
+    file: "frontend/src/components/MonthlyReport.js, frontend/src/components/ShiftDetail.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Color-coding implemented for summa (red), tulemus (green/red), G4S and ambulance (red if called)"
+
+  - task: "Remove circle icons from monthly report"
+    implemented: true
+    working: true
+    file: "frontend/src/components/MonthlyReport.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "No circle icons found in current implementation - task appears completed"
+
+  - task: "Update text from 'varguste kahju' to 'ennetatud varguse summa'"
+    implemented: true
+    working: true
+    file: "frontend/src/components/MonthlyReport.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Text already correctly updated to 'ennetatud varguse summa' in monthly report summary"
+
+  - task: "Template system UI for shift creation"
+    implemented: false
+    working: "NA"
+    file: "frontend/src/components/ShiftForm.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Not implemented yet - need to add template functionality to shift creation form"
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 0
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "Template system API endpoints"
+    - "Template system UI for shift creation"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+    - agent: "main"
+      message: "Starting implementation of template system. Visual improvements appear to be completed. Need to implement backend API endpoints for templates and frontend UI integration."
