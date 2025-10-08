@@ -337,10 +337,13 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                         }
                         
                         // Additional services if called
-                        if (incident.g4s_patrol_called || incident.ambulance_called) {
+                        const hasG4S = incident.g4s_patrol_called === true;
+                        const hasAmbulance = incident.ambulance_called === true;
+                        
+                        if (hasG4S || hasAmbulance) {
                           const services = [];
-                          if (incident.g4s_patrol_called) services.push('G4S patrull');
-                          if (incident.ambulance_called) services.push('Kiirabi');
+                          if (hasG4S) services.push('G4S patrull');
+                          if (hasAmbulance) services.push('Kiirabi');
                           lines.push(`   Kutsutud teenused: ${services.join(', ')}`);
                         }
                         
