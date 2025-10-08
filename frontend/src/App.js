@@ -24,6 +24,30 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authChecking, setAuthChecking] = useState(true);
 
+  const checkAuthentication = async () => {
+    try {
+      const response = await apiClient.get('/auth/check');
+      if (response.data.authenticated) {
+        setIsAuthenticated(true);
+        localStorage.setItem('isAuthenticated', 'true');
+      } else {
+        setIsAuthenticated(false);
+        localStorage.removeItem('isAuthenticated');
+      }
+    } catch (error) {
+      console.error('Auth check error:', error);
+      setIsAuthenticated(false);
+      localStorage.removeItem('isAuthenticated');
+    } finally {
+      setAuthChecking(false);
+    }
+  };
+
+  const handleAuthSuccess = () => {
+    setIsAuthenticated(true);
+    fetchShifts();
+  };
+
   const fetchShifts = async () => {
     try {
       setLoading(true);
@@ -31,6 +55,10 @@ function App() {
       setShifts(response.data);
     } catch (error) {
       console.error('Error fetching shifts:', error);
+      if (error.response?.status === 401) {
+        setIsAuthenticated(false);
+        localStorage.removeItem('isAuthenticated');
+      }
     } finally {
       setLoading(false);
     }
