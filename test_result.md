@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: Complete visual improvements for incident display (color-coding, text changes) and implement template system for shift reports to pre-fill object and guard details for faster report creation.
+user_problem_statement: Complete visual improvements for incident display (color-coding, text changes) and implement template system for shift reports to pre-fill object and guard details for faster report creation. Fix mobile UI issues with incident dialog scrolling, update incident time display to show user-entered time instead of timestamp, and fix remaining "varguste kahju" text in monthly report table.
 
 backend:
   - task: "Template system API endpoints"
