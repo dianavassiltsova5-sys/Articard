@@ -194,21 +194,24 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardHeader>
       </Card>
 
-      {/* Simplified Statistics */}
+      {/* Enhanced Statistics */}
       <Card className="card-hover no-print">
-        <CardContent className="p-4">
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="space-y-1">
-              <div className="text-2xl font-bold text-blue-600">{stats.totalHours.toFixed(1)}</div>
-              <div className="text-xs text-slate-600">Tundi kokku</div>
+        <CardContent className="p-6">
+          <div className="grid grid-cols-3 gap-6">
+            {/* Hours */}
+            <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200">
+              <div className="text-3xl font-bold text-blue-700 mb-1">{stats.totalHours.toFixed(1)}</div>
+              <div className="text-sm font-medium text-blue-600">Tundi kokku</div>
             </div>
-            <div className="space-y-1">
-              <div className="text-2xl font-bold text-green-600">{stats.totalShifts}</div>
-              <div className="text-xs text-slate-600">Vahetust</div>
+            {/* Shifts */}
+            <div className="text-center p-4 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl border border-emerald-200">
+              <div className="text-3xl font-bold text-emerald-700 mb-1">{stats.totalShifts}</div>
+              <div className="text-sm font-medium text-emerald-600">Vahetust</div>
             </div>
-            <div className="space-y-1">
-              <div className="text-2xl font-bold text-green-600">{stats.preventedTheftAmount.toFixed(0)}€</div>
-              <div className="text-xs text-slate-600">Ennetatud varguse summa</div>
+            {/* Prevented Amount */}
+            <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200">
+              <div className="text-3xl font-bold text-green-700 mb-1">{stats.preventedTheftAmount.toFixed(0)}€</div>
+              <div className="text-sm font-medium text-green-600">Ennetatud varguse summa</div>
             </div>
           </div>
         </CardContent>
