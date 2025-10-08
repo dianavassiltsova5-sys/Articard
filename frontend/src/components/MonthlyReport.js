@@ -538,7 +538,32 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </div>
       </div>
 
-      {/* Print Footer */}
+      {/* Screen Footer - Full Information */}
+      <div className="no-print mt-4 pt-2 border-t border-slate-200">
+        <div className="text-center text-sm text-slate-600 space-y-2">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div>
+              <div className="font-semibold text-blue-600">{stats.totalShifts}</div>
+              <div className="text-xs">Vahetust kokku</div>
+            </div>
+            <div>
+              <div className="font-semibold text-amber-600">{stats.totalIncidents}</div>
+              <div className="text-xs">Intsidenti kokku</div>
+            </div>
+            <div>
+              <div className="font-semibold text-green-600">{stats.preventedTheftAmount.toFixed(0)}€</div>
+              <div className="text-xs">Ennetatud summa</div>
+            </div>
+            <div>
+              <div className="font-semibold text-red-600">{stats.totalTheftAmount.toFixed(0)}€</div>
+              <div className="text-xs">Varguste kahju</div>
+            </div>
+          </div>
+          <p className="text-xs">Konfidentsiaalne dokument - ainult ametlikuks kasutamiseks</p>
+        </div>
+      </div>
+
+      {/* Print Footer - Simplified */}
       <div className="print-only mt-4 pt-2 border-t border-slate-200">
         <div className="text-center text-xs text-slate-600 space-y-1">
           <p>Kokkuvõte: {stats.totalShifts} vahetust | {stats.totalIncidents} intsidenti</p>
