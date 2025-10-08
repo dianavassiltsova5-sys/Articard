@@ -261,205 +261,136 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardHeader>
         <CardContent>
           {monthlyShifts.length > 0 ? (
-            <div className="overflow-x-auto" data-testid="monthly-shifts-table">
-              <table className="w-full text-sm border-collapse shadow-sm rounded-lg overflow-hidden" style={{ minWidth: '800px' }}>
-                <thead>
-                  <tr className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-                    <th className="border-r border-blue-500 p-3 text-left font-semibold" style={{ width: '10%' }}>Kuupäev</th>
-                    <th className="border-r border-blue-500 p-3 text-left font-semibold" style={{ width: '8%' }}>Aeg sisse</th>
-                    <th className="border-r border-blue-500 p-3 text-left font-semibold" style={{ width: '8%' }}>Aeg välja</th>
-                    <th className="border-r border-blue-500 p-3 text-left font-semibold" style={{ width: '6%' }}>Tunnid</th>
-                    <th className="border-r border-blue-500 p-3 text-left font-semibold" style={{ width: '15%' }}>Turvamees</th>
-                    <th className="border-r border-blue-500 p-3 text-left font-semibold" style={{ width: '15%' }}>Objekt</th>
-                    <th className="p-3 text-left font-semibold" style={{ width: '38%' }}>Märge</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {monthlyShifts.map((shift, index) => {
-                    const startTime = new Date(`2000-01-01T${shift.start_time}`);
-                    const endTime = new Date(`2000-01-01T${shift.end_time}`);
-                    let hoursWorked = (endTime - startTime) / (1000 * 60 * 60);
-                    if (hoursWorked < 0) hoursWorked += 24;
-                    
-                    // Format incidents for Märge column with better structure
-                    let remarksContent = '';
-                    if (shift.incidents && shift.incidents.length > 0) {
-                      remarksContent = shift.incidents.map((incident, idx) => {
-                        let lines = [];
-                        
-                        // Main incident line with time and type
-                        let mainLine = `${idx + 1}. `;
-                        if (incident.incident_time) {
-                          mainLine += `Kell ${incident.incident_time} - `;
-                        }
-                        mainLine += `${formatIncidentType(incident.type)}`;
-                        
-                        // Add prevented theft indicator
-                        if (incident.type === 'theft' && incident.theft_prevented) {
-                          mainLine += ` (ENNETATUD)`;
-                        }
-                        
-                        lines.push(mainLine);
-                        
-                        // Description on separate line
-                        lines.push(`   Kirjeldus: ${incident.description}`);
-                        
-                        // Details for theft incidents
-                        if (incident.type === 'theft') {
-                          const details = [];
-                          details.push(`Isik: ${formatGender(incident.gender)}`);
-                          
-                          // Amount with red styling
-                          const amountText = incident.theft_prevented ? 
-                            `Ennetatud summa: ${incident.amount}€` : 
-                            `Summa: ${incident.amount}€`;
-                          details.push(amountText);
-                          
-                          details.push(`Erivahendid: ${incident.special_tools_used ? 'Jah' : 'Ei'}`);
-                          
-                          // G4S with conditional styling
-                          const g4sText = incident.g4s_patrol_called ? 'Jah' : 'Ei';
-                          details.push(`G4S patrull: ${g4sText}`);
-                          
-                          // Ambulance with conditional styling
-                          const ambulanceText = incident.ambulance_called ? 'Jah' : 'Ei';
-                          details.push(`Kiirabi: ${ambulanceText}`);
-                          
-                          // Outcome with conditional styling
-                          const outcomeText = formatOutcome(incident.outcome);
-                          details.push(`Tulemus: ${outcomeText}`);
-                          
-                          lines.push(`   ${details.join(', ')}`);
-                        }
-                        
-                        // For general incidents, show services too
-                        if (incident.type === 'general') {
-                          const details = [];
-                          details.push(`G4S patrull: ${incident.g4s_patrol_called ? 'Jah' : 'Ei'}`);
-                          details.push(`Kiirabi: ${incident.ambulance_called ? 'Jah' : 'Ei'}`);
-                          lines.push(`   ${details.join(', ')}`);
-                        }
-                        
-                        return lines.join('\n');
-                      }).join('\n\n');
-                    } else {
-                      remarksContent = 'Intsidendid puuduvad';
-                    }
-                    
-                    return (
-                      <tr key={shift.id} className={`hover:bg-blue-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
-                        <td className="border-r border-gray-200 p-3 text-sm font-medium">
-                          {format(parseISO(shift.date), 'dd.MM.yyyy')}
-                        </td>
-                        <td className="border-r border-gray-200 p-3 text-sm">
-                          {shift.start_time}
-                        </td>
-                        <td className="border-r border-gray-200 p-3 text-sm">
-                          {shift.end_time}
-                        </td>
-                        <td className="border-r border-gray-200 p-3 text-sm font-bold text-blue-700">
+            <div data-testid="monthly-shifts-cards">
+              {/* Compact Shift Cards Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                {monthlyShifts.map((shift, index) => {
+                  const startTime = new Date(`2000-01-01T${shift.start_time}`);
+                  const endTime = new Date(`2000-01-01T${shift.end_time}`);
+                  let hoursWorked = (endTime - startTime) / (1000 * 60 * 60);
+                  if (hoursWorked < 0) hoursWorked += 24;
+                  
+                  return (
+                    <div key={shift.id} className="bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition-shadow p-4">
+                      {/* Header with date and hours */}
+                      <div className="flex justify-between items-center mb-3">
+                        <div className="text-lg font-bold text-slate-800">
+                          {format(parseISO(shift.date), 'dd.MM')}
+                        </div>
+                        <div className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-medium">
                           {hoursWorked.toFixed(1)}h
-                        </td>
-                        <td className="border-r border-gray-200 p-3 text-sm font-medium text-slate-700">
-                          {shift.guard_name}
-                        </td>
-                        <td className="border-r border-gray-200 p-3 text-sm">
-                          <span className="text-slate-700 font-medium">
-                            {shift.object_name}
-                          </span>
-                        </td>
-                        <td className="p-3 text-sm leading-relaxed align-top">
-                          <div className="space-y-2">
-                            {shift.incidents && shift.incidents.length > 0 ? (
-                              shift.incidents.map((incident, idx) => {
-                                const lines = [];
-                                
-                                // Main incident line
-                                let mainLine = `${idx + 1}. `;
-                                if (incident.incident_time) {
-                                  mainLine += `Kell ${incident.incident_time} - `;
-                                }
-                                mainLine += `${formatIncidentType(incident.type)}`;
-                                
-                                if (incident.type === 'theft' && incident.theft_prevented) {
-                                  mainLine += ` (ENNETATUD)`;
-                                }
-                                
-                                return (
-                                  <div key={idx} className="mb-3">
-                                    <div className="font-medium">
-                                      {incident.incident_time && (
-                                        <span className="font-bold">Kell {incident.incident_time} - </span>
-                                      )}
-                                      {`${idx + 1}. ${formatIncidentType(incident.type)}`}
-                                      {incident.type === 'theft' && incident.theft_prevented && ' (ENNETATUD)'}
-                                    </div>
-                                    <div className="ml-3 space-y-1 text-sm">
-                                      <div>Kirjeldus: {incident.description}</div>
-                                      
-                                      {incident.type === 'theft' && (
-                                        <div className="flex flex-wrap gap-4 text-xs">
-                                          <span>Isik: {formatGender(incident.gender)}</span>
-                                          <span className={incident.theft_prevented ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
-                                            {incident.theft_prevented ? 'Ennetatud summa' : 'Summa'}: {incident.amount}€
-                                          </span>
-                                          <span>Erivahendid: {incident.special_tools_used ? 'Jah' : 'Ei'}</span>
-                                          <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold' : ''}>
-                                            G4S patrull: {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
-                                          </span>
-                                          <span className={incident.ambulance_called ? 'text-red-600 font-bold' : ''}>
-                                            Kiirabi: {incident.ambulance_called ? 'Jah' : 'Ei'}
-                                          </span>
-                                          <span className={
-                                            incident.outcome === 'politsei' ? 'text-red-600 font-bold' :
-                                            (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold' : ''
-                                          }>
-                                            Tulemus: {formatOutcome(incident.outcome)}
-                                          </span>
-                                        </div>
-                                      )}
-                                      
-                                      {incident.type === 'general' && (
-                                        <div className="flex flex-wrap gap-4 text-xs">
-                                          <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold' : ''}>
-                                            G4S patrull: {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
-                                          </span>
-                                          <span className={incident.ambulance_called ? 'text-red-600 font-bold' : ''}>
-                                            Kiirabi: {incident.ambulance_called ? 'Jah' : 'Ei'}
-                                          </span>
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                );
-                              })
-                            ) : (
-                              <div className="text-slate-500">Intsidendid puuduvad</div>
-                            )}
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                  {/* Summary Row */}
-                  <tr className="bg-gradient-to-r from-blue-100 to-blue-200 border-t-4 border-blue-400">
-                    <td className="border-r border-gray-300 p-3 text-sm font-bold text-blue-800" colSpan="3">KOKKU</td>
-                    <td className="border-r border-gray-300 p-3 text-sm font-bold text-blue-800">
-                      {stats.totalHours.toFixed(1)}h
-                    </td>
-                    <td className="border-r border-gray-300 p-3 text-sm font-medium text-blue-700" colSpan="2">
-                      {stats.totalShifts} vahetust, {stats.totalIncidents} intsidenti
-                    </td>
-                    <td className="p-3 text-sm text-blue-700">
-                      <div className="space-y-1">
-                        {stats.preventedThefts > 0 && (
-                          <div>Ennetatud varguse summa: <span className="font-bold text-green-600">{stats.preventedTheftAmount.toFixed(0)}€</span></div>
-                        )}
+                        </div>
                       </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                      
+                      {/* Time range */}
+                      <div className="flex items-center gap-2 mb-3 text-sm text-slate-600">
+                        <Clock className="h-4 w-4" />
+                        <span>{shift.start_time} - {shift.end_time}</span>
+                      </div>
+                      
+                      {/* Guard and Object */}
+                      <div className="space-y-2 mb-3">
+                        <div className="flex items-center gap-2 text-sm">
+                          <User className="h-4 w-4 text-emerald-600" />
+                          <span className="font-medium text-slate-700">{shift.guard_name}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                          <Building className="h-4 w-4 text-blue-600" />
+                          <span className="text-slate-600 truncate">{shift.object_name}</span>
+                        </div>
+                      </div>
+                      
+                      {/* Incidents */}
+                      {shift.incidents && shift.incidents.length > 0 ? (
+                        <div className="border-t pt-3 space-y-2">
+                          <div className="flex items-center gap-2 mb-2">
+                            <AlertTriangle className="h-4 w-4 text-amber-600" />
+                            <span className="text-sm font-medium text-slate-700">
+                              {shift.incidents.length} intsident{shift.incidents.length !== 1 ? 'i' : ''}
+                            </span>
+                          </div>
+                          {shift.incidents.map((incident, idx) => (
+                            <div key={idx} className="text-xs bg-slate-50 rounded p-2">
+                              <div className="font-medium mb-1">
+                                {incident.incident_time && (
+                                  <span className="font-bold text-slate-600">{incident.incident_time} - </span>
+                                )}
+                                <span className={incident.type === 'theft' ? 'text-red-600' : 'text-amber-600'}>
+                                  {formatIncidentType(incident.type)}
+                                </span>
+                                {incident.type === 'theft' && incident.theft_prevented && (
+                                  <span className="bg-green-100 text-green-800 px-1 rounded ml-1 text-xs">ENNETATUD</span>
+                                )}
+                              </div>
+                              <div className="text-slate-600 mb-1 truncate">{incident.description}</div>
+                              
+                              {incident.type === 'theft' && (
+                                <div className="flex flex-wrap gap-2 text-xs">
+                                  <span className={incident.theft_prevented ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
+                                    {incident.amount}€
+                                  </span>
+                                  {incident.g4s_patrol_called && (
+                                    <span className="bg-red-100 text-red-700 px-1 rounded">G4S</span>
+                                  )}
+                                  {incident.ambulance_called && (
+                                    <span className="bg-red-100 text-red-700 px-1 rounded">Kiirabi</span>
+                                  )}
+                                  <span className={
+                                    incident.outcome === 'politsei' ? 'text-red-600 font-bold' :
+                                    (incident.outcome === 'vabastatud' || incident.outcome === 'maksis_vabastatud') ? 'text-green-600 font-bold' : ''
+                                  }>
+                                    {formatOutcome(incident.outcome)}
+                                  </span>
+                                </div>
+                              )}
+                              
+                              {incident.type === 'general' && (
+                                <div className="flex gap-2 text-xs">
+                                  {incident.g4s_patrol_called && (
+                                    <span className="bg-red-100 text-red-700 px-1 rounded">G4S</span>
+                                  )}
+                                  {incident.ambulance_called && (
+                                    <span className="bg-red-100 text-red-700 px-1 rounded">Kiirabi</span>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="border-t pt-3 text-sm text-slate-400 text-center">
+                          Intsidendid puuduvad
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              
+              {/* Summary Card */}
+              <div className="bg-gradient-to-r from-blue-50 to-slate-50 border border-blue-200 rounded-lg p-4">
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <div className="text-lg font-bold text-blue-700">{stats.totalHours.toFixed(1)}h</div>
+                    <div className="text-sm text-blue-600">Kokku tunde</div>
+                  </div>
+                  <div>
+                    <div className="text-lg font-bold text-emerald-700">{stats.totalShifts}</div>
+                    <div className="text-sm text-emerald-600">Vahetust</div>
+                  </div>
+                  <div>
+                    <div className="text-lg font-bold text-amber-700">{stats.totalIncidents}</div>
+                    <div className="text-sm text-amber-600">Intsidenti</div>
+                  </div>
+                </div>
+                {stats.preventedThefts > 0 && (
+                  <div className="mt-3 pt-3 border-t border-blue-200 text-center">
+                    <div className="text-lg font-bold text-green-700">
+                      Ennetatud varguse summa: {stats.preventedTheftAmount.toFixed(0)}€
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           ) : (
             <div className="text-center py-12 text-slate-500">
