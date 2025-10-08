@@ -21,6 +21,8 @@ const apiClient = axios.create({
 function App() {
   const [shifts, setShifts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authChecking, setAuthChecking] = useState(true);
 
   const fetchShifts = async () => {
     try {
