@@ -330,21 +330,20 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                             details.push(`Summa: ${incident.amount}€`);
                           }
                           details.push(`Erivahendid: ${incident.special_tools_used ? 'Jah' : 'Ei'}`);
+                          details.push(`G4S patrull: ${incident.g4s_patrol_called ? 'Jah' : 'Ei'}`);
+                          details.push(`Kiirabi: ${incident.ambulance_called ? 'Jah' : 'Ei'}`);
                           if (!incident.theft_prevented) {
                             details.push(`Tulemus: ${formatOutcome(incident.outcome)}`);
                           }
                           lines.push(`   ${details.join(', ')}`);
                         }
                         
-                        // Additional services if called
-                        const hasG4S = incident.g4s_patrol_called === true;
-                        const hasAmbulance = incident.ambulance_called === true;
-                        
-                        if (hasG4S || hasAmbulance) {
-                          const services = [];
-                          if (hasG4S) services.push('G4S patrull');
-                          if (hasAmbulance) services.push('Kiirabi');
-                          lines.push(`   Kutsutud teenused: ${services.join(', ')}`);
+                        // For general incidents, show services too
+                        if (incident.type === 'general') {
+                          const details = [];
+                          details.push(`G4S patrull: ${incident.g4s_patrol_called ? 'Jah' : 'Ei'}`);
+                          details.push(`Kiirabi: ${incident.ambulance_called ? 'Jah' : 'Ei'}`);
+                          lines.push(`   ${details.join(', ')}`);
                         }
                         
                         return lines.join('\n');
