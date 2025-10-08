@@ -325,7 +325,7 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                   <div className="space-y-4">
                     {monthlyShifts.map((shift) => (
                       shift.incidents && shift.incidents.length > 0 && (
-                        <div key={shift.id} className="bg-white rounded-lg border border-slate-200 p-4">
+                        <div key={shift.id} className="bg-white rounded-lg border border-slate-200 p-4 break-inside-avoid page-break-inside-avoid">
                           <div className="font-bold text-slate-800 mb-3 pb-2 border-b border-slate-200">
                             {format(parseISO(shift.date), 'dd.MM.yyyy')} - {shift.guard_name} ({shift.object_name})
                           </div>
