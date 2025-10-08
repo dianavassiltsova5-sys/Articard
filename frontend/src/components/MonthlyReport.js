@@ -417,22 +417,11 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardContent>
       </Card>
 
-      {/* Print Header */}
-      <div className="print-only print-header">
-        <div className="flex items-center gap-3">
-          <img 
-            src="https://customer-assets.emergentagent.com/job_security-timetrack/artifacts/37b9rrnc_Articard.png" 
-            alt="Articard Logo" 
-            className="print-logo"
-          />
-          <div>
-            <h1 className="print-title">ARTICARD TURVAFIRMA</h1>
-            <p className="print-subtitle">Professionaalne turvateenus</p>
-          </div>
-        </div>
-        <div className="text-right text-xs">
-          <p>Kuu aruanne - {monthName}</p>
-          <p>{format(new Date(), 'dd.MM.yyyy HH:mm', { locale: et })}</p>
+      {/* Print header - simplified */}
+      <div className="print-only mb-4">
+        <div className="text-center border-b pb-2">
+          <h2 className="text-lg font-bold">Kuu aruanne - {monthName}</h2>
+          <p className="text-sm">{format(new Date(), 'dd.MM.yyyy HH:mm', { locale: et })}</p>
         </div>
       </div>
 
