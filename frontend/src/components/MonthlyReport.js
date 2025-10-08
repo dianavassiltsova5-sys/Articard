@@ -194,35 +194,111 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
         </CardHeader>
       </Card>
 
-      {/* Simplified Statistics - no-print for screen view */}
+      {/* Full Monthly Statistics - screen view only */}
       <Card className="card-hover no-print">
         <CardContent className="p-4">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div className="space-y-1">
-              <div className="text-xl font-bold text-blue-600">{stats.totalHours.toFixed(1)}h</div>
+              <div className="text-2xl font-bold text-blue-600">{stats.totalHours.toFixed(1)}</div>
               <div className="text-xs text-slate-600">Tundi kokku</div>
             </div>
             <div className="space-y-1">
-              <div className="text-xl font-bold text-slate-700">{stats.objects.length}</div>
-              <div className="text-xs text-slate-600">Objekti</div>
+              <div className="text-2xl font-bold text-green-600">{stats.totalShifts}</div>
+              <div className="text-xs text-slate-600">Vahetust</div>
             </div>
             <div className="space-y-1">
-              <div className="text-xl font-bold text-slate-700">{stats.guards.length}</div>
-              <div className="text-xs text-slate-600">Turvameest</div>
+              <div className="text-2xl font-bold text-amber-600">{stats.totalIncidents}</div>
+              <div className="text-xs text-slate-600">Intsidenti</div>
             </div>
             <div className="space-y-1">
-              <div className="text-xl font-bold text-green-600">{stats.preventedTheftAmount.toFixed(0)}€</div>
-              <div className="text-xs text-slate-600">Ennetatud summa</div>
+              <div className="text-2xl font-bold text-red-600">{stats.totalTheftAmount.toFixed(0)}€</div>
+              <div className="text-xs text-slate-600">Varguste kahju</div>
             </div>
-            <div className="space-y-1">
-              <div className="text-sm text-slate-600">
-                {format(startOfMonth(new Date(parseInt(year), parseInt(month) - 1)), 'dd.MM.yyyy')} - {format(endOfMonth(new Date(parseInt(year), parseInt(month) - 1)), 'dd.MM.yyyy')}
+          </div>
+          {stats.preventedThefts > 0 && (
+            <div className="mt-3 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-300">
+              <div className="text-center">
+                <div className="text-xl font-bold text-green-800">
+                  {stats.preventedThefts} ennetatud vargust
+                </div>
+                <div className="text-lg font-semibold text-green-700">
+                  {stats.preventedTheftAmount.toFixed(0)}€
+                </div>
+                <div className="text-xs text-green-600 mt-1">
+                  Ennetatud varguse summa
+                </div>
               </div>
-              <div className="text-xs text-slate-600">Periood</div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Compact Summary - screen view only */}
+      <Card className="card-hover no-print">
+        <CardHeader>
+          <CardTitle className="text-lg">Personal ja objektid</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <div className="font-medium text-sm text-slate-700 mb-2 flex items-center gap-1">
+                <User className="h-4 w-4" />
+                Turvamehed ({stats.guards.length})
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {stats.guards.map((guard, index) => (
+                  <Badge key={index} variant="secondary" className="text-xs">
+                    {guard} ({monthlyShifts.filter(s => s.guard_name === guard).length})
+                  </Badge>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className="font-medium text-sm text-slate-700 mb-2 flex items-center gap-1">
+                <Building className="h-4 w-4" />
+                Objektid ({stats.objects.length})
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {stats.objects.map((object, index) => (
+                  <Badge key={index} variant="secondary" className="text-xs">
+                    {object} ({monthlyShifts.filter(s => s.object_name === object).length})
+                  </Badge>
+                ))}
+              </div>
             </div>
           </div>
         </CardContent>
       </Card>
+
+      {/* Simplified Statistics for Print ONLY */}
+      <div className="print-only">
+        <div className="mb-4 p-4 border rounded">
+          <div className="grid grid-cols-5 gap-4 text-center text-sm">
+            <div>
+              <div className="font-bold text-blue-600">{stats.totalHours.toFixed(1)}h</div>
+              <div className="text-xs">Tundi kokku</div>
+            </div>
+            <div>
+              <div className="font-bold text-slate-700">{stats.objects.length}</div>
+              <div className="text-xs">Objekti</div>
+            </div>
+            <div>
+              <div className="font-bold text-slate-700">{stats.guards.length}</div>
+              <div className="text-xs">Turvameest</div>
+            </div>
+            <div>
+              <div className="font-bold text-green-600">{stats.preventedTheftAmount.toFixed(0)}€</div>
+              <div className="text-xs">Ennetatud summa</div>
+            </div>
+            <div>
+              <div className="text-xs">
+                {format(startOfMonth(new Date(parseInt(year), parseInt(month) - 1)), 'dd.MM.yyyy')} - {format(endOfMonth(new Date(parseInt(year), parseInt(month) - 1)), 'dd.MM.yyyy')}
+              </div>
+              <div className="text-xs">Periood</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Compact Table Report - Similar to Reference Screenshot */}
       <Card className="card-hover">
