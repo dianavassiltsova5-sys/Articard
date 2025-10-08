@@ -256,6 +256,114 @@ class ArticardAPITester:
             404
         )
 
+    # Template CRUD Tests
+    def test_get_all_templates_empty(self):
+        """Test getting all templates (should be empty initially)"""
+        return self.run_test(
+            "Get All Templates (Empty)",
+            "GET",
+            "templates",
+            200
+        )
+
+    def test_create_template(self):
+        """Test creating a new template"""
+        template_data = {
+            "name": "Mall 1",
+            "object_name": "VIRU TN 4 MAXIMA (T289)",
+            "guard_name": "V.Kauts",
+            "start_time": "03:15:00",
+            "end_time": "03:15:00"
+        }
+        
+        success, response = self.run_test(
+            "Create Template",
+            "POST",
+            "templates",
+            200,
+            data=template_data
+        )
+        
+        if success and 'id' in response:
+            self.created_template_id = response['id']
+            print(f"   Created template ID: {self.created_template_id}")
+        
+        return success, response
+
+    def test_get_all_templates(self):
+        """Test getting all templates after creation"""
+        return self.run_test(
+            "Get All Templates",
+            "GET",
+            "templates",
+            200
+        )
+
+    def test_get_template_by_id(self):
+        """Test getting a specific template by ID"""
+        if not self.created_template_id:
+            self.log_test("Get Template by ID", False, "No template ID available from create test")
+            return False, {}
+        
+        return self.run_test(
+            "Get Template by ID",
+            "GET",
+            f"templates/{self.created_template_id}",
+            200
+        )
+
+    def test_update_template(self):
+        """Test updating a template"""
+        if not self.created_template_id:
+            self.log_test("Update Template", False, "No template ID available from create test")
+            return False, {}
+        
+        update_data = {
+            "name": "Mall 1 Updated",
+            "guard_name": "V.Kauts Updated",
+            "start_time": "04:00:00",
+            "end_time": "04:00:00"
+        }
+        
+        return self.run_test(
+            "Update Template",
+            "PUT",
+            f"templates/{self.created_template_id}",
+            200,
+            data=update_data
+        )
+
+    def test_get_nonexistent_template(self):
+        """Test getting a non-existent template"""
+        return self.run_test(
+            "Get Non-existent Template",
+            "GET",
+            "templates/nonexistent-id",
+            404
+        )
+
+    def test_delete_nonexistent_template(self):
+        """Test deleting a non-existent template"""
+        return self.run_test(
+            "Delete Non-existent Template",
+            "DELETE",
+            "templates/nonexistent-id",
+            404
+        )
+
+    def test_delete_template(self):
+        """Test deleting a template"""
+        if not self.created_template_id:
+            self.log_test("Delete Template", False, "No template ID available from create test")
+            return False, {}
+        
+        return self.run_test(
+            "Delete Template",
+            "DELETE",
+            f"templates/{self.created_template_id}",
+            200
+        )
+
     def run_all_tests(self):
         """Run all API tests in sequence"""
         print("🚀 Starting Articard Security API Tests")
