@@ -391,6 +391,19 @@ class ArticardAPITester:
         self.test_delete_nonexistent_shift()
         self.test_delete_shift()
         
+        print("\n" + "🔧 Testing Template System")
+        print("=" * 60)
+        
+        # Test template CRUD operations
+        self.test_get_all_templates_empty()
+        self.test_create_template()
+        self.test_get_all_templates()
+        self.test_get_template_by_id()
+        self.test_update_template()
+        self.test_get_nonexistent_template()
+        self.test_delete_nonexistent_template()
+        self.test_delete_template()
+        
         # Print summary
         print("\n" + "=" * 60)
         print(f"📊 Test Summary:")
