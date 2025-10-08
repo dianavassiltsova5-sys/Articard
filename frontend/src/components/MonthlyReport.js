@@ -378,14 +378,21 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                                 </div>
                               )}
                               
+                              {/* General incident details */}
                               {incident.type === 'general' && (
-                                <div className="flex gap-2 text-xs">
-                                  {incident.g4s_patrol_called && (
-                                    <span className="bg-red-100 text-red-700 px-1 rounded">G4S</span>
-                                  )}
-                                  {incident.ambulance_called && (
-                                    <span className="bg-red-100 text-red-700 px-1 rounded">Kiirabi</span>
-                                  )}
+                                <div className="grid grid-cols-2 gap-2 text-sm">
+                                  <div>
+                                    <span className="font-medium text-slate-600">G4S patrull:</span> 
+                                    <span className={incident.g4s_patrol_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                                      {incident.g4s_patrol_called ? 'Jah' : 'Ei'}
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <span className="font-medium text-slate-600">Kiirabi:</span> 
+                                    <span className={incident.ambulance_called ? 'text-red-600 font-bold ml-1' : 'ml-1'}>
+                                      {incident.ambulance_called ? 'Jah' : 'Ei'}
+                                    </span>
+                                  </div>
                                 </div>
                               )}
                             </div>
