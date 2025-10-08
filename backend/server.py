@@ -85,6 +85,7 @@ class GeneralIncident(BaseModel):
     description: str
     g4s_patrol_called: bool = False
     ambulance_called: bool = False
+    incident_time: str = ""  # Time in HH:MM format
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class TheftIncident(BaseModel):
