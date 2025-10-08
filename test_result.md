@@ -222,6 +222,9 @@ test_plan:
     - "Mobile UI fixes for incident dialog scrolling"
     - "Incident time display improvements"
     - "Text updates from 'varguste kahju' to 'ennetatud varguse summa'"
+    - "Tulemus display for prevented thefts fixed"
+    - "Duplicate text removal in monthly report"
+    - "Statistics visual improvements"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
