@@ -283,28 +283,28 @@ const MonthlyReport = ({ shifts, onDeleteShift }) => {
                     return (
                       <div className={`${side === 'right' ? 'border-l pl-4' : 'pr-4'} flex-1`}>
                         {/* Date and hours header */}
-                        <div className="flex justify-between items-center mb-2">
-                          <div className="text-lg font-bold text-slate-800">
+                        <div className="flex justify-between items-center mb-3">
+                          <div className="text-xl font-bold text-slate-800">
                             {format(parseISO(shift.date), 'dd.MM')}
                           </div>
-                          <div className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">
+                          <div className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-medium">
                             {hoursWorked.toFixed(1)}h
                           </div>
                         </div>
                         
                         {/* Time and personnel */}
-                        <div className="space-y-1 mb-3 text-xs">
-                          <div className="flex items-center gap-1">
-                            <Clock className="h-3 w-3 text-slate-500" />
-                            <span className="text-slate-600">{shift.start_time} - {shift.end_time}</span>
+                        <div className="space-y-2 mb-4 text-sm">
+                          <div className="flex items-center gap-2">
+                            <Clock className="h-4 w-4 text-slate-500" />
+                            <span className="text-slate-700">{shift.start_time} - {shift.end_time}</span>
                           </div>
-                          <div className="flex items-center gap-1">
-                            <User className="h-3 w-3 text-emerald-600" />
-                            <span className="font-medium text-slate-700 text-xs">{shift.guard_name}</span>
+                          <div className="flex items-center gap-2">
+                            <User className="h-4 w-4 text-emerald-600" />
+                            <span className="font-medium text-slate-700">{shift.guard_name}</span>
                           </div>
-                          <div className="flex items-center gap-1">
-                            <Building className="h-3 w-3 text-blue-600" />
-                            <span className="text-slate-600 text-xs truncate">{shift.object_name}</span>
+                          <div className="flex items-center gap-2">
+                            <Building className="h-4 w-4 text-blue-600" />
+                            <span className="text-slate-600" title={shift.object_name}>{shift.object_name.length > 25 ? `${shift.object_name.substring(0, 25)}...` : shift.object_name}</span>
                           </div>
                         </div>
                         
