@@ -18,6 +18,8 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { format, parseISO } from 'date-fns';
 import { et } from 'date-fns/locale';
 import { toast } from 'sonner';
+import EditShiftDialog from './EditShiftDialog';
+import EditIncidentDialog from './EditIncidentDialog';
 
 const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, onDeleteShift }) => {
   const { id } = useParams();
