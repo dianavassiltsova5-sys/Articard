@@ -334,6 +334,42 @@ async def remove_incident(shift_id: str, incident_index: int):
     
     return {"message": "Incident removed successfully"}
 
+@api_router.put("/shifts/{shift_id}/incidents/{incident_index}")
+async def update_incident(shift_id: str, incident_index: int, incident_data: IncidentUpdate):
+    """Update a specific incident in a shift"""
+    shift = await db.work_shifts.find_one({"id": shift_id})
+    if not shift:
+        raise HTTPException(status_code=404, detail="Shift not found")
+    
+    incidents = shift.get("incidents", [])
+    if incident_index >= len(incidents):
+        raise HTTPException(status_code=404, detail="Incident not found")
+    
+    # Get current incident
+    current_incident = incidents[incident_index]
+    
+    # Update only provided fields
+    update_dict = {k: v for k, v in incident_data.dict().items() if v is not None}
+    
+    # Prepare update data for MongoDB
+    if 'incident_time' in update_dict and update_dict['incident_time']:
+        update_dict['incident_time'] = update_dict['incident_time'].strftime('%H:%M:%S')
+    
+    # Merge with current incident
+    current_incident.update(update_dict)
+    current_incident["timestamp"] = datetime.now(timezone.utc)
+    
+    # Update the incidents array
+    incidents[incident_index] = current_incident
+    
+    # Update in database
+    await db.work_shifts.update_one(
+        {"id": shift_id}, 
+        {"$set": {"incidents": incidents}}
+    )
+    
+    return {"message": "Incident updated successfully", "incident": current_incident}
+
 @api_router.get("/shifts/by-month/{year}/{month}")
 async def get_shifts_by_month(year: int, month: int):
     # Create start and end dates for the month
