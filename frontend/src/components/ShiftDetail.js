@@ -26,6 +26,9 @@ const ShiftDetail = ({ shifts, onUpdateShift, onAddIncident, onRemoveIncident, o
   const navigate = useNavigate();
   const [shift, setShift] = useState(null);
   const [showIncidentDialog, setShowIncidentDialog] = useState(false);
+  const [showEditShiftDialog, setShowEditShiftDialog] = useState(false);
+  const [showEditIncidentDialog, setShowEditIncidentDialog] = useState(false);
+  const [editingIncidentIndex, setEditingIncidentIndex] = useState(null);
   const [incidentType, setIncidentType] = useState('general');
   const [incidentData, setIncidentData] = useState({
     description: '',
