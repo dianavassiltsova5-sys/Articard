@@ -165,6 +165,26 @@ class AuthResponse(BaseModel):
     authenticated: bool
     message: str
 
+class WorkShiftUpdate(BaseModel):
+    date: Optional[date] = None
+    object_name: Optional[str] = None
+    guard_name: Optional[str] = None
+    start_time: Optional[time] = None
+    end_time: Optional[time] = None
+
+class IncidentUpdate(BaseModel):
+    type: Optional[str] = None
+    description: Optional[str] = None
+    incident_time: Optional[time] = None
+    g4s_patrol_called: Optional[bool] = None
+    ambulance_called: Optional[bool] = None
+    # Theft-specific fields
+    gender: Optional[str] = None
+    amount: Optional[float] = None
+    special_tools_used: Optional[bool] = None
+    outcome: Optional[str] = None
+    theft_prevented: Optional[bool] = None
+
 # Authentication functions
 def get_client_ip(request: Request) -> str:
     """Extract client IP from request headers"""
